@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签管理工具 - Web版</title>
+    <title>标签管理工具 - 自动加载版</title>
     <style>
         * {
             margin: 0;
@@ -39,11 +39,18 @@
             margin-bottom: 10px;
         }
         
+        .status-bar {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
         .main-content {
             display: flex;
             gap: 20px;
             margin-bottom: 30px;
-            visibility: hidden; /* 初始隐藏，解析后再显示 */
+            /* 初始可见性取决于是否加载成功 */
+            display: none; 
         }
         
         .categories {
@@ -104,46 +111,6 @@
         .tag-english { color: #2575fc; }
         .tag-chinese { color: #28a745; }
         
-        /* 修改后的 URL 输入区域样式 */
-        .url-fetch-area {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            display: flex;
-            gap: 10px;
-        }
-        
-        .url-input {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .url-input:focus {
-            border-color: #6a11cb;
-        }
-        
-        .fetch-btn {
-            padding: 12px 25px;
-            background: #6a11cb;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background 0.3s ease;
-            white-space: nowrap;
-        }
-        
-        .fetch-btn:hover { background: #5a0fb8; }
-        .fetch-btn:disabled { background: #ccc; cursor: not-allowed; }
-
         .search-box {
             width: 100%;
             padding: 15px;
@@ -151,6 +118,7 @@
             border-radius: 8px;
             margin-bottom: 20px;
             font-size: 1rem;
+            display: none; /* 初始隐藏 */
         }
         
         .no-tags {
@@ -159,9 +127,15 @@
             color: #6c757d;
         }
 
+        .loading-info {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
         @media (max-width: 768px) {
             .main-content { flex-direction: column; }
-            .url-fetch-area { flex-direction: column; }
         }
     </style>
 </head>
@@ -169,69 +143,64 @@
     <div class="container">
         <header>
             <h1>标签管理工具</h1>
-            <p style="opacity: 0.8;">输入文本文件 URL 并解析</p>
+            <div id="statusInfo" class="status-bar">正在尝试读取 Lables.txt...</div>
         </header>
-        <!--
-        <div class="url-fetch-area">
-            <input type="text" id="urlInput" class="url-input" placeholder="请输入文本文件的 Web 地址 (如: https://example.com/tags.txt)">
-            <button class="fetch-btn" id="fetchBtn">读取并解析</button>
-        </div>
-		-->
+        
         <input type="text" class="search-box" placeholder="搜索标签..." id="searchInput">
         
+        <div id="loadingView" class="loading-info">
+            数据加载中，请稍候...
+        </div>
+
         <div class="main-content" id="main-content">
             <div class="categories">
                 <h3>分类</h3>
-                <div id="categoriesList">
-                    <div class="no-tags"><p>请加载地址查看分类</p></div>
-                </div>
+                <div id="categoriesList"></div>
             </div>
             
-            <div class="tags-container" id="tagsContainer">
-                <div class="no-tags"><p>暂无标签数据</p></div>
-            </div>
+            <div class="tags-container" id="tagsContainer"></div>
         </div>
     </div>
 
     <script>
         let tagsData = {};
-        const fetchBtn = document.getElementById('fetchBtn');
-        // const urlInput = document.getElementById('urlInput');
-		const urlInput = 'https://riley3567.github.io/tags/Lables.txt';
-        const mainContent = document.getElementById('main-content');
+        const STATUS_INFO = document.getElementById('statusInfo');
+        const MAIN_CONTENT = document.getElementById('main-content');
+        const SEARCH_BOX = document.getElementById('searchInput');
+        const LOADING_VIEW = document.getElementById('loadingView');
 
-        // 处理点击抓取
-        fetchBtn.addEventListener('click', async () => {
-            const url = urlInput.value.trim();
-            if (!url) {
-                alert("请输入有效的 URL 地址");
-                return;
-            }
+        // 页面加载完成后自动执行
+        window.addEventListener('DOMContentLoaded', loadDefaultFile);
 
+        async function loadDefaultFile() {
+            const fileName = 'Lables.txt'; // 目标文件名
+            
             try {
-                fetchBtn.disabled = true;
-                fetchBtn.textContent = '读取中...';
-                
-                // 使用 fetch API 获取内容
-                const response = await fetch(url);
+                const response = await fetch(fileName);
                 
                 if (!response.ok) {
-                    throw new Error(`无法访问该地址: ${response.status} ${response.statusText}`);
+                    throw new Error(`无法找到文件 ${fileName} (错误代码: ${response.status})`);
                 }
                 
                 const content = await response.text();
                 parseFileContent(content);
                 
+                // 加载成功后的UI处理
+                STATUS_INFO.textContent = `成功加载: ${fileName}`;
+                LOADING_VIEW.style.display = 'none';
+                MAIN_CONTENT.style.display = 'flex';
+                SEARCH_BOX.style.display = 'block';
+                
             } catch (error) {
-                console.error('Fetch Error:', error);
-                alert(`读取失败！\n原因：${error.message}\n提示：如果地址正确，通常是因为跨域(CORS)限制，目标服务器不允许外部访问。`);
-            } finally {
-                fetchBtn.disabled = false;
-                fetchBtn.textContent = '读取并解析';
+                console.error('Error:', error);
+                STATUS_INFO.textContent = `加载失败: ${error.message}`;
+                LOADING_VIEW.innerHTML = `
+                    <p style="color: #e74c3c;">❌ 加载失败</p>
+                    <p style="font-size: 1rem; margin-top:10px;">请确保服务器同级目录下存在 <b>${fileName}</b> 文件。</p>
+                `;
             }
-        });
+        }
 
-        // 解析逻辑（保持原样，仅做微调）
         function parseFileContent(content) {
             tagsData = {};
             const lines = content.split('\n');
@@ -257,13 +226,7 @@
                     }
                 }
             }
-			
-            if (Object.keys(tagsData).length > 0) {
-                mainContent.style.visibility = "visible";
-                displayCategoriesAndTags();
-            } else {
-                alert("文件内容格式不正确，未解析到标签。");
-            }
+            displayCategoriesAndTags();
         }
         
         function displayCategoriesAndTags() {
@@ -271,7 +234,10 @@
             categoriesList.innerHTML = '';
             const categories = Object.keys(tagsData);
             
-            if (categories.length === 0) return;
+            if (categories.length === 0) {
+                categoriesList.innerHTML = '<div class="no-tags"><p>文件中未发现有效分类</p></div>';
+                return;
+            }
             
             for (const category of categories) {
                 const categoryElement = document.createElement('div');
@@ -287,6 +253,7 @@
                 categoriesList.appendChild(categoryElement);
             }
             
+            // 默认选中第一个
             categoriesList.children[0].classList.add('active');
             displayTags(categories[0]);
         }
@@ -296,7 +263,10 @@
             tagsContainer.innerHTML = '';
             const category = tagsData[categoryKey];
             
-            if (!category || category.tags.length === 0) return;
+            if (!category || category.tags.length === 0) {
+                tagsContainer.innerHTML = '<div class="no-tags"><p>此分类下没有标签</p></div>';
+                return;
+            }
             
             category.tags.forEach(tag => {
                 const tagCard = document.createElement('div');
