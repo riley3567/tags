@@ -93,7 +93,7 @@
         .tag-card {
             background: white;
             border-radius: 10px;
-            padding: 10px;
+			padding: 15px 20px 15px 20px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
         }
@@ -308,8 +308,8 @@
                     tagCard.className = 'tag-card';
                     tagCard.innerHTML = `
                         <div class="tag-content">
-                            <span class="tag-english">${tag.english}</span><br>
-                            <span class="tag-chinese">${tag.chinese}</span>
+                            <p><span class="tag-english">${tag.english}</span></p>
+                            <p><span class="tag-chinese">${tag.chinese}</span></p>
                         </div>
                     `;
                     tagsContainer.appendChild(tagCard);
