@@ -105,8 +105,11 @@
         
         .tag-content {
             font-size: 1.0rem;
-            margin-bottom: 0px;
             font-weight: 500;
+        }
+		
+		.tag-content p {
+            margin 5px 0px;
         }
         
         .tag-english { color: #2575fc; }
@@ -274,8 +277,8 @@
                 tagCard.className = 'tag-card';
                 tagCard.innerHTML = `
                     <div class="tag-content">
-                        <span class="tag-english">${tag.english}</span><br>
-                        <span class="tag-chinese">${tag.chinese}</span>
+                        <p><span class="tag-english">${tag.english}</span></p>
+                        <p><span class="tag-chinese">${tag.chinese}</span></p>
                     </div>
                 `;
                 tagsContainer.appendChild(tagCard);
