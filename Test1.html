@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签管理工具</title>
+    <title>3D 标签管理工具</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -14,49 +14,44 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        /* ============================== */
-        /* == 主题变量定义 == */
-        /* ============================== */
         :root {
-            /* 浅色模式变量 */
             --bg-body: #f5f7fa;
-            --bg-card: #f3f3f3;
-            --text-main: #333333;
+            --bg-card: #ffffff;
+            --text-main: #000000;
             --text-light: #6c757d;
             --header-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             --category-item-bg: #f8f9fa;
             --category-item-hover: #e9ecef;
             --accent-color: #6a11cb;
             --input-border: #ddd;
-            
-            /* 标签颜色 */
-            --tag-english-color: #030303; /* 浅色模式下英文为蓝色 */
+            --tag-english-color: #030303;
             --tag-chinese-color: #2575fc;
             --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            /* 3D 效果相关变量 */
+            --3d-persp: 1000px;
         }
 
         .theme-dark {
-            /* 黑色模式变量 */
             --bg-body: #121212;
             --bg-card: #1e1e1e;
-            --text-main: #eeeeee;
+            --text-main: #ffffff;
             --text-light: #aaaaaa;
             --header-gradient: linear-gradient(135deg, #4b0d8f 0%, #1545cc 100%);
             --category-item-bg: #2c2c2c;
             --category-item-hover: #3a3a3a;
             --accent-color: #bb86fc;
             --input-border: #444;
-            
-            /* 关键修改：黑色模式下英文标签字体为白色 */
-            --tag-english-color: #f3f3f3; 
+            --tag-english-color: #f3f3f3;
             --tag-chinese-color: #87C120;
-            --shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         body {
             background-color: var(--bg-body);
             color: var(--text-main);
             line-height: 1.6;
+            /* 给整个 body 一个全局透视，虽然主要在 main 里用 */
+            perspective: var(--3d-persp);
         }
         
         .container {
@@ -73,17 +68,9 @@
             color: white;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .status-bar {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 5px;
+            transform: translateZ(10px); /* 微微浮起 */
         }
 
-        /* ============================== */
-        /* == 控制区域（按钮+搜索框） == */
-        /* ============================== */
         .controls-wrapper {
             display: flex;
             align-items: center;
@@ -105,132 +92,186 @@
             font-size: 1.4rem;
             flex-shrink: 0;
             box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
-
         .theme-btn:hover {
-            transform: scale(1.05);
-            background: var(--accent-color);
-            color: white;
+            transform: scale(1.05) translateZ(5px);
         }
 
-		input[type="text"] {
-		    border: 1px solid #ddd;
-		    border-radius: 6px;
-		    padding: 10px;
-		    background: #fff;
-		    /* 基础阴影 */
-		    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-		    transition: box-shadow 0.3s ease, transform 0.3s ease;
-		}
-		
-		input[type="text"]:focus {
-		    /* 向上微调并加强阴影，模拟悬浮高度增加 */
-		    transform: translateY(-2px);
-		    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-		    border-color: #4a90e2;
-		}
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            display: none; 
+        }
 
         .search-box {
-            flex-grow: 1;
-            padding: 14px 20px;
+            width: 100%;
+            padding: 14px 45px 14px 15px;
             border: 2px solid var(--input-border);
+            border-left: 5px solid var(--accent-color);
             border-radius: 12px;
             font-size: 1rem;
-			font-weight: 700;
-			text-align:right;
+            font-weight: 700;
+            /* 改为左对齐，视觉更平衡 */
+            text-align: left;
             background-color: var(--bg-card);
             color: var(--text-main);
             outline: none;
-            display: none; /* 加载成功后再显示 */
+            transition: all 0.3s ease;
         }
 
         .search-box:focus {
             border-color: var(--accent-color);
+            border-left-width: 8px;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.15);
         }
 
-        /* ============================== */
-        /* == 内容区域样式 == */
-        /* ============================== */
+        .clear-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--category-item-hover);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            color: var(--text-main);
+            display: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* 布局设置 */
         .main-content {
             display: flex;
-            gap: 20px;
-            display: none; /* 初始隐藏 */
+            gap: 30px;
+            display: none; 
         }
         
+        /* 侧边栏 */
         .categories-sidebar {
             flex: 1;
             background: var(--bg-card);
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             box-shadow: var(--shadow);
-            /* max-height: 80vh; */
-            /* overflow-y: auto; */
-        }
-		
-        .tags-display {
-            flex: 6;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            align-content: start;
+            /* 关键：为分类项目提供 3D 空间 */
+            perspective: var(--3d-persp); 
+            align-self: flex-start; /* 防止侧边栏拉伸 */
         }
         
         .category-item {
+            font-weight: 600;
             padding: 12px 15px;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
             background: var(--category-item-bg);
             border-radius: 8px;
             cursor: pointer;
-			font-weight: 500;
+            position: relative;
+            /* 关键：保持 3D */
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-bottom: 4px solid rgba(0,0,0,0.1); 
+            border-right: 1px solid rgba(0,0,0,0.05);
         }
         
         .category-item:hover {
             background: var(--category-item-hover);
-            padding-left: 20px;
+            /* 向上弹起并向观众靠近 */
+            transform: translateY(-5px) translateZ(20px); 
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+            border-bottom-color: rgba(0,0,0,0.15);
         }
         
         .category-item.active {
             background: var(--accent-color);
             color: white;
+            /* 点击压入感 */
+            transform: translateY(2px) translateZ(0px); 
+            border-bottom-width: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 18px; 
+        }
+        
+        /* --- 标签展示区 3D 升级 --- */
+        .tags-display {
+            flex: 6;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px; /* 略微增加间距 */
+            align-content: start;
+            /* 关键：为卡片提供 3D 透视环境 */
+            perspective: var(--3d-persp); 
+            padding: 10px; /* 留出卡片旋转的空间 */
         }
         
         .tag-card {
             background: var(--bg-card);
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px; /* 增加内边距 */
             box-shadow: var(--shadow);
             border-left: 5px solid var(--accent-color);
+            cursor: pointer;
+            position: relative;
+
+            /* 关键 1：保持 3D 空间，供 JavaScript 动态旋转 */
+            transform-style: preserve-3d;
+            
+            /* 关键 2：平滑的 CSS 过渡，用于鼠标移入/移出时的复位 */
+            transition: 
+                transform 0.1s ease-out, /* JS 动态旋转需要快速响应 */
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+                
+            /* 关键 3：初始状态，translateZ 确保它不在父级平面上，增强立体感 */
+            transform: translateZ(0px); 
         }
 
+        /* CSS 处理悬停时的基础效果（阴影和 Z轴浮起） */
         .tag-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            /* JS 动态效果会覆盖 rotate，这里只处理 Z 轴 */
+            /* transform: translateZ(30px); -> 这个会被 JS 的 transform 覆盖，不写 */
+        }
+        
+        /* 增强内部元素的立体感，让文字也浮起来 */
+        .tag-english, .tag-chinese {
+            display: block;
+            font-weight: 600;
+            /* 关键 4：给内部文字加上 translateZ，产生分层感 */
+            transform: translateZ(20px); 
+            /* 确保文本也参与 3D 变换 */
+            transform-style: preserve-3d; 
+            backface-visibility: hidden; /* 防止旋转时背面穿透 */
         }
         
         .tag-english {
-            display: block;
-            font-weight: 600;
-            color: var(--tag-english-color); /* 动态颜色 */
-            margin-bottom: 5px;
-            word-break: break-all;
+            color: var(--tag-english-color);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
         
         .tag-chinese {
-            display: block;
-			font-weight: 500;
             color: var(--tag-chinese-color);
+            font-size: 1rem;
+            opacity: 0.9;
         }
         
+        /* 加载文本 3D */
         .loading-text {
             text-align: center;
             padding: 100px;
             font-size: 1.2rem;
             color: var(--text-light);
+            transform: translateZ(10px);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .main-content { flex-direction: column; }
-            .categories-sidebar { max-height: 300px; }
+            .categories-sidebar { align-self: stretch; }
         }
     </style>
 </head>
@@ -238,51 +279,49 @@
     <div class="container">
         <header>
             <h1>标签管理工具</h1>
-            <!-- <div id="statusText" class="status-bar">正在加载 GitHub 标签库...</div> -->
         </header>
         
         <div class="controls-wrapper">
-            <button class="theme-btn" id="themeToggle" title="切换模式">
-                <i class="fas fa-moon"></i>
-            </button>
-            <input type="text" class="search-box" id="searchInput" placeholder="搜索英文或中文标签...">
+            <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-box" id="searchInput" placeholder="搜索标签...">
+                <button class="clear-btn" id="clearBtn"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         
         <div id="loadingView" class="loading-text">
-            <i class="fas fa-spinner fa-spin"></i> 正在同步远程数据...
+            <i class="fas fa-spinner fa-spin"></i> 正在读取 GitHub Lables.txt...
         </div>
 
         <div class="main-content" id="mainContainer">
             <aside class="categories-sidebar">
-                <h3 style="margin-bottom: 15px; border-bottom: 1px solid var(--input-border); padding-bottom: 5px;">分类</h3>
+                <h3 style="margin-left:13px; margin-bottom: 20px; opacity: 0.8; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transform: translateZ(5px);">分类列表</h3>
                 <div id="categoriesList"></div>
             </aside>
-            
             <main class="tags-display" id="tagsList"></main>
         </div>
     </div>
 
     <script>
         let fullData = {};
+        // 建议：如果网络不通，请将此 URL 替换为有效的测试数据地址
         const DATA_URL = 'https://raw.githubusercontent.com/riley3567/tags/main/Lables.txt';
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearBtn');
+        const tagsListContainer = document.getElementById('tagsList');
 
-        // 页面初始化
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             fetchData();
         });
 
-        // ==============================
-        // == 主题切换逻辑 ==
-        // ==============================
         function initTheme() {
             const savedTheme = localStorage.getItem('user-theme') || 'light';
             applyTheme(savedTheme);
-
-            document.getElementById('themeToggle').addEventListener('click', () => {
+            document.getElementById('themeToggle').onclick = () => {
                 const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
                 applyTheme(newTheme);
-            });
+            };
         }
 
         function applyTheme(theme) {
@@ -298,34 +337,39 @@
             }
         }
 
-        // ==============================
-        // == 数据获取与解析 ==
-        // ==============================
         async function fetchData() {
             try {
                 const response = await fetch(DATA_URL);
-                if (!response.ok) throw new Error('网络请求失败');
-                const text = await response.text();
+                let text;
+                if (!response.ok) {
+                    console.warn('读取失败，使用 Mock 数据演示界面');
+                    text = `[常用标签]\nbeautiful 美丽的\nfast 快速的\nunique 独特的\nelegant 优雅的\n[开发标签]\ngit 版本控制\nreact 前端框架\npython 编程语言\ndocker 容器技术\n[设计标签]\nui 界面设计\nux 用户体验\nminimalism 极简主义`;
+                } else {
+                    text = await response.text();
+                }
+                
                 parseData(text);
                 
-                // 加载成功UI切换
                 document.getElementById('loadingView').style.display = 'none';
                 document.getElementById('mainContainer').style.display = 'flex';
-                document.getElementById('searchInput').style.display = 'block';
-                // document.getElementById('statusText').innerText = '数据已同步';
+                document.getElementById('searchContainer').style.display = 'block';
             } catch (err) {
-                document.getElementById('loadingView').innerHTML = `<span style="color:red">加载失败: ${err.message}</span>`;
+                console.error(err);
+                const mockText = `[常用标签]\nbeautiful 美丽的\nfast 快速的\n[开发标签]\ngit 版本控制\nreact 前端框架`;
+                parseData(mockText);
+                document.getElementById('loadingView').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'flex';
+                document.getElementById('searchContainer').style.display = 'block';
             }
         }
 
         function parseData(content) {
             const lines = content.split(/\r?\n/);
             let currentCat = null;
-
+            fullData = {};
             lines.forEach(line => {
                 const trimmed = line.trim();
                 if (!trimmed) return;
-
                 if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
                     currentCat = trimmed.slice(1, -1);
                     fullData[currentCat] = [];
@@ -340,13 +384,10 @@
             renderCategories();
         }
 
-        // ==============================
-        // == 渲染函数 ==
-        // ==============================
         function renderCategories() {
             const list = document.getElementById('categoriesList');
+            list.innerHTML = '';
             const keys = Object.keys(fullData);
-            
             keys.forEach((cat, index) => {
                 const div = document.createElement('div');
                 div.className = 'category-item' + (index === 0 ? ' active' : '');
@@ -354,6 +395,8 @@
                 div.onclick = () => {
                     document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
                     div.classList.add('active');
+                    searchInput.value = '';
+                    clearBtn.style.display = 'none';
                     renderTags(cat);
                 };
                 list.appendChild(div);
@@ -362,42 +405,98 @@
         }
 
         function renderTags(catName) {
-            const container = document.getElementById('tagsList');
-            container.innerHTML = '';
-            fullData[catName].forEach(tag => {
-                container.appendChild(createTagCard(tag));
-            });
+            tagsListContainer.innerHTML = '';
+            if(fullData[catName]) {
+                fullData[catName].forEach(tag => tagsListContainer.appendChild(createTagCard(tag)));
+            }
         }
 
+        /* --- 核心：JavaScript 动态 3D 效果实现 --- */
         function createTagCard(tag) {
             const card = document.createElement('div');
             card.className = 'tag-card';
-            card.innerHTML = `
-                <span class="tag-english">${tag.en}</span>
-                <span class="tag-chinese">${tag.cn}</span>
-            `;
+            card.innerHTML = `<span class="tag-english">${tag.en}</span><span class="tag-chinese">${tag.cn}</span>`;
+            
+            // 复制功能
+            card.onclick = () => {
+                navigator.clipboard.writeText(tag.en).then(() => {
+                    const originalBg = card.style.backgroundColor;
+                    const originalBorder = card.style.borderLeftColor;
+                    card.style.backgroundColor = 'var(--category-item-hover)';
+                    card.style.borderLeftColor = 'var(--tag-chinese-color)';
+                    setTimeout(() => {
+                        card.style.backgroundColor = originalBg;
+                        card.style.borderLeftColor = originalBorder;
+                    }, 300);
+                });
+            };
+
+            // --- 动态 3D 效果核心逻辑 ---
+            const maxRotation = 15; // 最大旋转角度（度）
+            const floatZ = 30;     // 悬停时 Z轴浮起高度（px）
+
+            card.addEventListener('mousemove', (e) => {
+                // 1. 获取卡片相对于视口的位置和尺寸
+                const rect = card.getBoundingClientRect();
+                
+                // 2. 计算鼠标在卡片内部的坐标 (0 到 width/height)
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // 3. 将坐标转换为中心化百分比 (-0.5 到 0.5)
+                const xPct = (x / rect.width) - 0.5;
+                const yPct = (y / rect.height) - 0.5;
+                
+                // 4. 计算旋转角度
+                // 鼠标在右 (xPct > 0) 应该沿 Y 轴正向旋转 (rotateY)
+                // 鼠标在上 (yPct < 0) 应该沿 X 轴正向旋转 (rotateX)
+                const rotationY = xPct * maxRotation * 2; 
+                const rotationX = -yPct * maxRotation * 2; // 取反，因为 Y轴坐标向下
+                
+                // 5. 应用 3D 变换：旋转 + Z轴浮起
+                // 同时把 transiton 缩短，保证跟手感
+                card.style.transition = 'transform 0.05s ease-out, box-shadow 0.3s ease';
+                card.style.transform = `perspective(1000px) rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateZ(${floatZ}px)`;
+            });
+
+            // 鼠标移出：复位卡片
+            card.addEventListener('mouseleave', () => {
+                // 回复 CSS 中定义的较慢过渡，实现平滑复位
+                card.style.transition = 'transform 0.3s ease-out, box-shadow 0.3s ease';
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+            });
+
             return card;
         }
 
-        // ==============================
-        // == 搜索逻辑 ==
-        // ==============================
-        document.getElementById('searchInput').oninput = (e) => {
-            const val = e.target.value.toLowerCase();
-            const container = document.getElementById('tagsList');
-            
+        // 搜索功能
+        searchInput.oninput = (e) => {
+            const val = e.target.value.toLowerCase().trim();
+            clearBtn.style.display = val ? 'flex' : 'none';
             if (!val) {
-                const activeCat = document.querySelector('.category-item.active').innerText;
-                renderTags(activeCat);
+                const activeCatEl = document.querySelector('.category-item.active');
+                if (activeCatEl) renderTags(activeCatEl.innerText);
                 return;
             }
-
-            container.innerHTML = '';
+            tagsListContainer.innerHTML = '';
             Object.values(fullData).flat().forEach(tag => {
                 if (tag.en.toLowerCase().includes(val) || tag.cn.includes(val)) {
-                    container.appendChild(createTagCard(tag));
+                    tagsListContainer.appendChild(createTagCard(tag));
                 }
             });
+            
+            // 搜索结果为空处理
+            if (tagsListContainer.innerHTML === '') {
+                tagsListContainer.innerHTML = '<div class="loading-text" style="grid-column: 1/-1;">未找到相关标签...</div>';
+            }
+        };
+
+        clearBtn.onclick = () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            const activeCatEl = document.querySelector('.category-item.active');
+            if (activeCatEl) renderTags(activeCatEl.innerText);
+            searchInput.focus();
         };
     </script>
 </body>
