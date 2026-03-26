@@ -16,7 +16,7 @@
 
         :root {
             --bg-body: #f5f7fa;
-            --bg-card: #ffffff;
+            --bg-card: #f3f3f3;
             --text-main: #333333;
             --text-light: #6c757d;
             --header-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -24,8 +24,8 @@
             --category-item-hover: #e9ecef;
             --accent-color: #6a11cb;
             --input-border: #ddd;
-            --tag-english-color: #2575fc;
-            --tag-chinese-color: #28a745;
+            --tag-english-color: #030303;
+            --tag-chinese-color: #2575fc;
             --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
@@ -39,8 +39,8 @@
             --category-item-hover: #3a3a3a;
             --accent-color: #bb86fc;
             --input-border: #444;
-            --tag-english-color: #ffffff;
-            --tag-chinese-color: #81c784;
+            --tag-english-color: #f3f3f3;
+            --tag-chinese-color: #87C120;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
@@ -101,6 +101,8 @@
             border: 2px solid var(--input-border);
             border-radius: 12px;
             font-size: 1rem;
+			font-weight: 600;
+			text-align:right;
             background-color: var(--bg-card);
             color: var(--text-main);
             outline: none;
@@ -136,14 +138,13 @@
             background: var(--bg-card);
             border-radius: 10px;
             padding: 20px;
-            max-height: 80vh;
-            overflow-y: auto;
             box-shadow: var(--shadow);
             perspective: 1000px; /* 为子元素提供 3D 环境 */
         }
 		
         /* 每一个分类条的 3D 效果 */
         .category-item {
+			font-weight: 600;
             padding: 12px 15px;
             margin-bottom: 15px;
             background: var(--category-item-bg);
@@ -195,7 +196,6 @@
         
         .tag-english {
             display: block;
-            font-size: 1.1rem;
             font-weight: 600;
             color: var(--tag-english-color);
             margin-bottom: 5px;
@@ -203,7 +203,7 @@
         
         .tag-chinese {
             display: block;
-            font-size: 0.95rem;
+            font-weight: 600;
             color: var(--tag-chinese-color);
         }
         
