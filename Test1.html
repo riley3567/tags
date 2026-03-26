@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>标签管理工具 - 增强主题版</title>
+    <title>标签管理工具</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -220,7 +220,7 @@
     <div class="container">
         <header>
             <h1>标签管理工具</h1>
-            <div id="statusText" class="status-bar">正在加载 GitHub 标签库...</div>
+            <!-- <div id="statusText" class="status-bar">正在加载 GitHub 标签库...</div> -->
         </header>
         
         <div class="controls-wrapper">
@@ -294,7 +294,7 @@
                 document.getElementById('loadingView').style.display = 'none';
                 document.getElementById('mainContainer').style.display = 'flex';
                 document.getElementById('searchInput').style.display = 'block';
-                document.getElementById('statusText').innerText = '数据已同步';
+                // document.getElementById('statusText').innerText = '数据已同步';
             } catch (err) {
                 document.getElementById('loadingView').innerHTML = `<span style="color:red">加载失败: ${err.message}</span>`;
             }
