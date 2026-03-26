@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 玻璃拟态 UI 界面</title>
+    <style>
+        :root {
+            --main-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --accent-color: #38bdf8;
+            --text-color: #f1f5f9;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: var(--main-bg);
+            background-attachment: fixed;
+            color: var(--text-color);
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* 顶部工具栏：搜索框靠右 */
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 40px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 320px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 15px;
+            text-align: right; /* 字体居右 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        /* 分类选择区域 */
+        .category-section {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .category-item {
+            padding: 10px 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-item:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.4);
+            /* 不使用位移，防止抖动 */
+        }
+
+        .category-item.active {
+            background: var(--accent-color);
+            color: #0f172a;
+            font-weight: bold;
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        /* 标签卡片网格 */
+        .tag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+
+        .tag-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1); /* 3D微边框 */
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tag-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .tag-card:active {
+            transform: scale(0.96); /* 点击时的物理反馈 */
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .tag-name {
+            font-size: 16px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .tag-sub {
+            font-size: 12px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toolbar">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="搜索提示词...">
+        </div>
+    </div>
+
+    <div class="category-section">
+        <div class="category-item active">全部标签</div>
+        <div class="category-item">人物角色</div>
+        <div class="category-item">画风材质</div>
+        <div class="category-item">光影环境</div>
+        <div class="category-item">构图视角</div>
+    </div>
+
+    <div class="tag-grid">
+        <div class="tag-card">
+            <span class="tag-name">Masterpiece</span>
+            <span class="tag-sub">杰作</span>
+        </div>
+        <div class="tag-card">
+            <span class="tag-name">Cinematic</span>
+            <span class="tag-sub">电影感</span>
+        </div>
+        <div class="tag-card">
+            <span class="tag-name">Hyper-detailed</span>
+            <span class="tag-sub">超精细</span>
+        </div>
+        <div class="tag-card">
+            <span class="tag-name">Ray Tracing</span>
+            <span class="tag-sub">光线追踪</span>
+        </div>
+        <div class="tag-card">
+            <span class="tag-name">Cyberpunk</span>
+            <span class="tag-sub">赛博朋克</span>
+        </div>
+        <div class="tag-card">
+            <span class="tag-name">Soft Lighting</span>
+            <span class="tag-sub">柔和光影</span>
+        </div>
+    </div>
+
+</body>
+</html>
