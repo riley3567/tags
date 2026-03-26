@@ -37,10 +37,12 @@
             --text-main: #dfe6e9;
             --text-color: #87C120;
             --accent-color: #6c5ce7;
-            --shadow-light: rgba(255, 255, 255, 0.05);
+            --shadow-low: rgba(155, 155, 155, 0.05);
             --shadow-dark: rgba(0, 0, 0, 0.4);
+            --shadow-light: rgba(255, 255, 255, 0.05);
             --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
             --perspective: 2000px;
+
         }
 
         body {
@@ -262,7 +264,7 @@
             background: rgba(255, 255, 255, 0.55);
             border-color: var(--accent-color);
             /* 增强深度 */
-            box-shadow: 15px 15px 35px var(--shadow-dark), -15px -15px 35px var(--shadow-light),
+            box-shadow: 15px 15px 35px var(--shadow-dark), -15px -15px 35px var(--shadow-low),
                         inset 0 0 20px rgba(155,155,155,0.6);
             /* 轻微且锚定的旋转，不乱晃 */
             transform: rotateY(3deg) translateZ(4px);
