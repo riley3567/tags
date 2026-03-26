@@ -14,13 +14,9 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        /* ============================== */
-        /* == 主题变量定义 == */
-        /* ============================== */
         :root {
-            /* 浅色模式变量 */
             --bg-body: #f5f7fa;
-            --bg-card: #f3f3f3;
+            --bg-card: #ffffff;
             --text-main: #333333;
             --text-light: #6c757d;
             --header-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -28,15 +24,12 @@
             --category-item-hover: #e9ecef;
             --accent-color: #6a11cb;
             --input-border: #ddd;
-            
-            /* 标签颜色 */
-            --tag-english-color: #030303; /* 浅色模式下英文为蓝色 */
+            --tag-english-color: #030303;
             --tag-chinese-color: #2575fc;
             --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .theme-dark {
-            /* 黑色模式变量 */
             --bg-body: #121212;
             --bg-card: #1e1e1e;
             --text-main: #eeeeee;
@@ -46,11 +39,9 @@
             --category-item-hover: #3a3a3a;
             --accent-color: #bb86fc;
             --input-border: #444;
-            
-            /* 关键修改：黑色模式下英文标签字体为白色 */
-            --tag-english-color: #f3f3f3; 
+            --tag-english-color: #f3f3f3;
             --tag-chinese-color: #87C120;
-            --shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         body {
@@ -74,16 +65,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        
-        .status-bar {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
 
-        /* ============================== */
-        /* == 控制区域（按钮+搜索框） == */
-        /* ============================== */
         .controls-wrapper {
             display: flex;
             align-items: center;
@@ -107,15 +89,15 @@
             box-shadow: var(--shadow);
         }
 
-        .theme-btn:hover {
-            transform: scale(1.05);
-            background: var(--accent-color);
-            color: white;
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            display: none;
         }
 
         .search-box {
-            flex-grow: 1;
-            padding: 14px 20px;
+            width: 100%;
+            padding: 14px 45px 14px 20px;
             border: 2px solid var(--input-border);
             border-radius: 12px;
             font-size: 1rem;
@@ -124,32 +106,73 @@
             background-color: var(--bg-card);
             color: var(--text-main);
             outline: none;
-            display: none; /* 加载成功后再显示 */
         }
 
-        .search-box:focus {
-            border-color: var(--accent-color);
+        .clear-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--category-item-hover);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            color: var(--text-main);
+            display: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* ============================== */
-        /* == 内容区域样式 == */
-        /* ============================== */
+        /* 布局设置 */
         .main-content {
             display: flex;
-            gap: 20px;
-            display: none; /* 初始隐藏 */
+            gap: 30px;
+            display: none;
         }
         
+        /* 侧边栏保持正常平面 */
         .categories-sidebar {
             flex: 1;
             background: var(--bg-card);
             border-radius: 10px;
-            padding: 15px;
+            padding: 20px;
             box-shadow: var(--shadow);
-            /* max-height: 80vh; */
-            /* overflow-y: auto; */
+            perspective: 1000px; /* 为子元素提供 3D 环境 */
         }
 		
+        /* 每一个分类条的 3D 效果 */
+        .category-item {
+			font-weight: 600;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: var(--category-item-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-bottom: 4px solid rgba(0,0,0,0.1); /* 模拟底座厚度 */
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .category-item:hover {
+            background: var(--category-item-hover);
+            transform: translateY(-5px) translateZ(15px); /* 向上弹起并向观众靠近 */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+            border-bottom-color: rgba(0,0,0,0.15);
+        }
+        
+        .category-item.active {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(2px); /* 点击压入感 */
+            border-bottom-width: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 18px; /* 补偿高度变化防止抖动 */
+        }
+        
         .tags-display {
             flex: 6;
             display: grid;
@@ -158,51 +181,30 @@
             align-content: start;
         }
         
-        .category-item {
-            padding: 12px 15px;
-            margin-bottom: 8px;
-            background: var(--category-item-bg);
-            border-radius: 8px;
-            cursor: pointer;
-			font-weight: 500;
-        }
-        
-        .category-item:hover {
-            background: var(--category-item-hover);
-            padding-left: 20px;
-        }
-        
-        .category-item.active {
-            background: var(--accent-color);
-            color: white;
-        }
-        
         .tag-card {
             background: var(--bg-card);
             border-radius: 12px;
             padding: 20px;
             box-shadow: var(--shadow);
             border-left: 5px solid var(--accent-color);
+            transition: transform 0.3s ease;
         }
 
         .tag-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
         }
         
         .tag-english {
             display: block;
             font-weight: 600;
-            color: var(--tag-english-color); /* 动态颜色 */
+            color: var(--tag-english-color);
             margin-bottom: 5px;
-            word-break: break-all;
         }
         
         .tag-chinese {
             display: block;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--tag-chinese-color);
-            opacity: 0.9;
         }
         
         .loading-text {
@@ -212,9 +214,8 @@
             color: var(--text-light);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .main-content { flex-direction: column; }
-            .categories-sidebar { max-height: 300px; }
         }
     </style>
 </head>
@@ -222,26 +223,26 @@
     <div class="container">
         <header>
             <h1>标签管理工具</h1>
-            <!-- <div id="statusText" class="status-bar">正在加载 GitHub 标签库...</div> -->
+            <!-- <div id="statusText" class="status-bar">同步中...</div> -->
         </header>
         
         <div class="controls-wrapper">
-            <button class="theme-btn" id="themeToggle" title="切换模式">
-                <i class="fas fa-moon"></i>
-            </button>
-            <input type="text" class="search-box" id="searchInput" placeholder="搜索英文或中文标签...">
+            <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-box" id="searchInput" placeholder="搜索标签...">
+                <button class="clear-btn" id="clearBtn"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         
         <div id="loadingView" class="loading-text">
-            <i class="fas fa-spinner fa-spin"></i> 正在同步远程数据...
+            <i class="fas fa-spinner fa-spin"></i> 正在读取 GitHub Lables.txt...
         </div>
 
         <div class="main-content" id="mainContainer">
             <aside class="categories-sidebar">
-                <h3 style="margin-bottom: 15px; border-bottom: 1px solid var(--input-border); padding-bottom: 5px;">分类</h3>
+                <h3 style="margin-bottom: 20px; opacity: 0.8; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">分类列表</h3>
                 <div id="categoriesList"></div>
             </aside>
-            
             <main class="tags-display" id="tagsList"></main>
         </div>
     </div>
@@ -249,24 +250,21 @@
     <script>
         let fullData = {};
         const DATA_URL = 'https://raw.githubusercontent.com/riley3567/tags/main/Lables.txt';
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearBtn');
 
-        // 页面初始化
         document.addEventListener('DOMContentLoaded', () => {
             initTheme();
             fetchData();
         });
 
-        // ==============================
-        // == 主题切换逻辑 ==
-        // ==============================
         function initTheme() {
             const savedTheme = localStorage.getItem('user-theme') || 'light';
             applyTheme(savedTheme);
-
-            document.getElementById('themeToggle').addEventListener('click', () => {
+            document.getElementById('themeToggle').onclick = () => {
                 const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
                 applyTheme(newTheme);
-            });
+            };
         }
 
         function applyTheme(theme) {
@@ -282,34 +280,28 @@
             }
         }
 
-        // ==============================
-        // == 数据获取与解析 ==
-        // ==============================
         async function fetchData() {
             try {
                 const response = await fetch(DATA_URL);
-                if (!response.ok) throw new Error('网络请求失败');
+                if (!response.ok) throw new Error('读取失败');
                 const text = await response.text();
                 parseData(text);
                 
-                // 加载成功UI切换
                 document.getElementById('loadingView').style.display = 'none';
                 document.getElementById('mainContainer').style.display = 'flex';
-                document.getElementById('searchInput').style.display = 'block';
+                document.getElementById('searchContainer').style.display = 'block';
                 // document.getElementById('statusText').innerText = '数据已同步';
             } catch (err) {
-                document.getElementById('loadingView').innerHTML = `<span style="color:red">加载失败: ${err.message}</span>`;
+                document.getElementById('loadingView').innerHTML = `<span style="color:red">错误: ${err.message}</span>`;
             }
         }
 
         function parseData(content) {
             const lines = content.split(/\r?\n/);
             let currentCat = null;
-
             lines.forEach(line => {
                 const trimmed = line.trim();
                 if (!trimmed) return;
-
                 if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
                     currentCat = trimmed.slice(1, -1);
                     fullData[currentCat] = [];
@@ -324,13 +316,9 @@
             renderCategories();
         }
 
-        // ==============================
-        // == 渲染函数 ==
-        // ==============================
         function renderCategories() {
             const list = document.getElementById('categoriesList');
             const keys = Object.keys(fullData);
-            
             keys.forEach((cat, index) => {
                 const div = document.createElement('div');
                 div.className = 'category-item' + (index === 0 ? ' active' : '');
@@ -338,6 +326,8 @@
                 div.onclick = () => {
                     document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
                     div.classList.add('active');
+                    searchInput.value = '';
+                    clearBtn.style.display = 'none';
                     renderTags(cat);
                 };
                 list.appendChild(div);
@@ -348,40 +338,39 @@
         function renderTags(catName) {
             const container = document.getElementById('tagsList');
             container.innerHTML = '';
-            fullData[catName].forEach(tag => {
-                container.appendChild(createTagCard(tag));
-            });
+            fullData[catName].forEach(tag => container.appendChild(createTagCard(tag)));
         }
 
         function createTagCard(tag) {
             const card = document.createElement('div');
             card.className = 'tag-card';
-            card.innerHTML = `
-                <span class="tag-english">${tag.en}</span>
-                <span class="tag-chinese">${tag.cn}</span>
-            `;
+            card.innerHTML = `<span class="tag-english">${tag.en}</span><span class="tag-chinese">${tag.cn}</span>`;
             return card;
         }
 
-        // ==============================
-        // == 搜索逻辑 ==
-        // ==============================
-        document.getElementById('searchInput').oninput = (e) => {
+        searchInput.oninput = (e) => {
             const val = e.target.value.toLowerCase();
+            clearBtn.style.display = val ? 'flex' : 'none';
             const container = document.getElementById('tagsList');
-            
             if (!val) {
                 const activeCat = document.querySelector('.category-item.active').innerText;
                 renderTags(activeCat);
                 return;
             }
-
             container.innerHTML = '';
             Object.values(fullData).flat().forEach(tag => {
                 if (tag.en.toLowerCase().includes(val) || tag.cn.includes(val)) {
                     container.appendChild(createTagCard(tag));
                 }
             });
+        };
+
+        clearBtn.onclick = () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            const activeCat = document.querySelector('.category-item.active').innerText;
+            renderTags(activeCat);
+            searchInput.focus();
         };
     </script>
 </body>
