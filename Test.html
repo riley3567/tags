@@ -100,7 +100,7 @@
             border-radius: 10px;
             padding: 10px;
             box-shadow: var(--shadow-card);
-            max-height: 800px;
+            /* max-height: 800px; */
             overflow-y: auto;
         }
 		
@@ -217,7 +217,7 @@
     <div class="container">
         <header>
             <h1>标签管理工具</h1>
-            <div id="statusInfo" class="status-bar">正在从 GitHub 获取最新标签...</div>
+            <!-- <div id="statusInfo" class="status-bar">正在从 GitHub 获取最新标签...</div> -->
         </header>
         
         <div class="controls-container">
@@ -243,7 +243,7 @@
 
     <script>
         let tagsData = {};
-        const STATUS_INFO = document.getElementById('statusInfo');
+        // const STATUS_INFO = document.getElementById('statusInfo');
         const MAIN_CONTENT = document.getElementById('main-content');
         const SEARCH_BOX = document.getElementById('searchInput');
         const LOADING_VIEW = document.getElementById('loadingView');
@@ -299,14 +299,14 @@
                 const content = await response.text();
                 parseFileContent(content);
                 
-                STATUS_INFO.textContent = `同步成功：已加载最新标签数据`;
+                // STATUS_INFO.textContent = `同步成功：已加载最新标签数据`;
                 LOADING_VIEW.style.display = 'none';
                 MAIN_CONTENT.style.display = 'flex';
                 SEARCH_BOX.style.display = 'block';
                 
             } catch (error) {
                 console.error('Error:', error);
-                STATUS_INFO.textContent = `同步失败：${error.message}`;
+                // STATUS_INFO.textContent = `同步失败：${error.message}`;
                 LOADING_VIEW.innerHTML = `
                     <p style="color: #e74c3c;">❌ 无法从 GitHub 加载数据</p>
                     <p style="font-size: 1rem; margin-top:10px;">请检查仓库中是否存在 <b>Lables.txt</b> 且链接正确。</p>
