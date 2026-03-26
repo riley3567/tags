@@ -168,7 +168,7 @@
 
     <script>
         let tagsData = {};
-        const STATUS_INFO = document.getElementById('statusInfo');
+        // const STATUS_INFO = document.getElementById('statusInfo');
         const MAIN_CONTENT = document.getElementById('main-content');
         const SEARCH_BOX = document.getElementById('searchInput');
         const LOADING_VIEW = document.getElementById('loadingView');
@@ -190,14 +190,14 @@
                 parseFileContent(content);
                 
                 // 加载成功后的UI处理
-                STATUS_INFO.textContent = `成功加载: ${fileName}`;
+                // STATUS_INFO.textContent = `成功加载: ${fileName}`;
                 LOADING_VIEW.style.display = 'none';
                 MAIN_CONTENT.style.display = 'flex';
                 SEARCH_BOX.style.display = 'block';
                 
             } catch (error) {
                 console.error('Error:', error);
-                STATUS_INFO.textContent = `加载失败: ${error.message}`;
+                // STATUS_INFO.textContent = `加载失败: ${error.message}`;
                 LOADING_VIEW.innerHTML = `
                     <p style="color: #e74c3c;">❌ 加载失败</p>
                     <p style="font-size: 1rem; margin-top:10px;">请确保服务器同级目录下存在 <b>${fileName}</b> 文件。</p>
