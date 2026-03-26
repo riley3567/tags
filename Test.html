@@ -1,82 +1,418 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标签管理工具</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 页面背景（模拟 github.io 的深色/浅色效果） */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        :root {
+            --bg-body: #f5f7fa;
+            --bg-card: #ffffff;
+            --text-main: #333333;
+            --text-light: #6c757d;
+            --header-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --category-item-bg: #f8f9fa;
+            --category-item-hover: #e9ecef;
+            --accent-color: #6a11cb;
+            --input-border: #ddd;
+            --tag-english-color: #030303;
+            --tag-chinese-color: #2575fc;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .theme-dark {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #eeeeee;
+            --text-light: #aaaaaa;
+            --header-gradient: linear-gradient(135deg, #4b0d8f 0%, #1545cc 100%);
+            --category-item-bg: #2c2c2c;
+            --category-item-hover: #3a3a3a;
+            --accent-color: #bb86fc;
+            --input-border: #444;
+            --tag-english-color: #f3f3f3;
+            --tag-chinese-color: #87C120;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
         body {
-            background-color: #f8f9fa;
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            padding-top: 50px;
-        }
-
-        /* 核心代码开始 */
-        .tag-input-container {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            transition: all 0.3s;
-        }
-
-        /* 模拟 tag-card 的紫色括号效果 */
-        .tag-input-container::before,
-        .tag-input-container::after {
-            content: "";
-            width: 10px;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            border: 2.5px solid #8e44ad; /* 经典的紫色 */
-            transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
-        .tag-input-container::before {
-            left: -5px;
-            border-right: none;
-        }
-
-        .tag-input-container::after {
-            right: -5px;
-            border-left: none;
-        }
-
-        /* 输入框样式 */
-        .tag-input-container input {
-            border: 1px solid transparent;
-            background: rgba(142, 68, 173, 0.05);
-            padding: 10px 15px;
-            font-size: 16px;
-            color: #2c3e50;
-            outline: none;
-            border-radius: 4px;
-        }
-
-        /* 悬停与聚焦时的动态效果 */
-        .tag-input-container:hover::before { left: -8px; }
-        .tag-input-container:hover::after { right: -8px; }
-
-        .tag-input-container:focus-within::before {
-            left: 0;
-            border-color: #9b59b6;
-        }
-        .tag-input-container:focus-within::after {
-            right: 0;
-            border-color: #9b59b6;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
         }
         
-        .tag-input-container input:focus {
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        /* 核心代码结束 */
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--header-gradient);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .controls-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 2px solid var(--accent-color);
+            background: var(--bg-card);
+            color: var(--accent-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: var(--shadow);
+        }
+
+        .search-container {
+            position: relative;
+            flex-grow: 1;
+            display: none; /* 初始隐藏，数据加载后显示 */
+        }
+
+        /* --- 修改后的搜索框样式 --- */
+        .search-box {
+            width: 100%;
+            /* 调整内边距：上 右 下 左。左边距减少以容纳边框，右边距增加以容纳清除按钮 */
+            padding: 14px 45px 14px 15px;
+            
+            /* 基础边框 */
+            border: 2px solid var(--input-border);
+            
+            /* 关键修改：增加类似 tag-card 的紫色左边框 */
+            border-left: 5px solid var(--accent-color);
+            
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            
+            /* 文字左对齐，与左边框呼应 */
+            text-align: left;
+            
+            background-color: var(--bg-card);
+            color: var(--text-main);
+            outline: none;
+            
+            /* 为所有属性（包括边框宽度）增加平滑过渡 */
+            transition: all 0.3s ease;
+        }
+
+        /* 搜索框获得焦点时的效果 */
+        .search-box:focus {
+            border-color: var(--accent-color);
+            /* 焦点时左边框加粗，增强反馈 */
+            border-left-width: 8px;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.15);
+        }
+        /* -------------------------- */
+
+        .clear-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--category-item-hover);
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            color: var(--text-main);
+            display: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 2; /* 确保在输入框之上 */
+        }
+
+        /* 布局设置 */
+        .main-content {
+            display: flex;
+            gap: 30px;
+            display: none; /* 初始隐藏，数据加载后显示 */
+        }
+        
+        /* 侧边栏保持正常平面 */
+        .categories-sidebar {
+            flex: 1;
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            perspective: 1000px; /* 为子元素提供 3D 环境 */
+        }
+        
+        /* 每一个分类条的 3D 效果 */
+        .category-item {
+            font-weight: 600;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            background: var(--category-item-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-bottom: 4px solid rgba(0,0,0,0.1); /* 模拟底座厚度 */
+            border-right: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .category-item:hover {
+            background: var(--category-item-hover);
+            transform: translateY(-5px) translateZ(15px); /* 向上弹起并向观众靠近 */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+            border-bottom-color: rgba(0,0,0,0.15);
+        }
+        
+        .category-item.active {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(2px); /* 点击压入感 */
+            border-bottom-width: 1px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-bottom: 18px; /* 补偿高度变化防止抖动 */
+        }
+        
+        .tags-display {
+            flex: 6;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            align-content: start;
+        }
+        
+        .tag-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            /* 参考的紫色左边框 */
+            border-left: 5px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .tag-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tag-english {
+            display: block;
+            font-weight: 600;
+            color: var(--tag-english-color);
+            margin-bottom: 5px;
+        }
+        
+        .tag-chinese {
+            display: block;
+            font-weight: 600;
+            color: var(--tag-chinese-color);
+        }
+        
+        .loading-text {
+            text-align: center;
+            padding: 100px;
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 900px) {
+            .main-content { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>标签管理工具</h1>
+        </header>
+        
+        <div class="controls-wrapper">
+            <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <div class="search-container" id="searchContainer">
+                <input type="text" class="search-box" id="searchInput" placeholder="搜索标签...">
+                <button class="clear-btn" id="clearBtn"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        
+        <div id="loadingView" class="loading-text">
+            <i class="fas fa-spinner fa-spin"></i> 正在读取 GitHub Lables.txt...
+        </div>
 
-    <div class="tag-input-container">
-        <input type="text" placeholder="输入标签名称...">
+        <div class="main-content" id="mainContainer">
+            <aside class="categories-sidebar">
+                <h3 style="margin-bottom: 20px; opacity: 0.8; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">分类列表</h3>
+                <div id="categoriesList"></div>
+            </aside>
+            <main class="tags-display" id="tagsList"></main>
+        </div>
     </div>
 
+    <script>
+        let fullData = {};
+        // 注意：原 URL 如果无法访问，请替换为有效的测试数据 URL 或本地路径
+        const DATA_URL = 'https://raw.githubusercontent.com/riley3567/tags/main/Lables.txt';
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearBtn');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            fetchData();
+        });
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('user-theme') || 'light';
+            applyTheme(savedTheme);
+            document.getElementById('themeToggle').onclick = () => {
+                const newTheme = document.body.classList.contains('theme-dark') ? 'light' : 'dark';
+                applyTheme(newTheme);
+            };
+        }
+
+        function applyTheme(theme) {
+            const btnIcon = document.querySelector('#themeToggle i');
+            if (theme === 'dark') {
+                document.body.classList.add('theme-dark');
+                btnIcon.className = 'fas fa-sun';
+                localStorage.setItem('user-theme', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                btnIcon.className = 'fas fa-moon';
+                localStorage.setItem('user-theme', 'light');
+            }
+        }
+
+        async function fetchData() {
+            try {
+                // 为了演示界面，如果读取失败，我们使用 mock 数据
+                const response = await fetch(DATA_URL);
+                let text;
+                if (!response.ok) {
+                    console.warn('读取失败，使用 Mock 数据演示界面');
+                    text = `[常用标签]\nbeautiful 美丽的\nfast 快速的\n[开发标签]\ngit 版本控制\nreact 前端框架`;
+                } else {
+                    text = await response.text();
+                }
+                
+                parseData(text);
+                
+                document.getElementById('loadingView').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'flex';
+                document.getElementById('searchContainer').style.display = 'block';
+            } catch (err) {
+                // 即便彻底出错，也显示 mock 数据，确保界面能看
+                console.error(err);
+                const mockText = `[常用标签]\nbeautiful 美丽的\nfast 快速的\n[开发标签]\ngit 版本控制\nreact 前端框架`;
+                parseData(mockText);
+                document.getElementById('loadingView').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'flex';
+                document.getElementById('searchContainer').style.display = 'block';
+            }
+        }
+
+        function parseData(content) {
+            const lines = content.split(/\r?\n/);
+            let currentCat = null;
+            fullData = {}; // 重置数据
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed) return;
+                if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+                    currentCat = trimmed.slice(1, -1);
+                    fullData[currentCat] = [];
+                } else if (currentCat && trimmed.includes(' ')) {
+                    const idx = trimmed.lastIndexOf(' ');
+                    fullData[currentCat].push({
+                        en: trimmed.slice(0, idx).trim(),
+                        cn: trimmed.slice(idx + 1).trim()
+                    });
+                }
+            });
+            renderCategories();
+        }
+
+        function renderCategories() {
+            const list = document.getElementById('categoriesList');
+            list.innerHTML = ''; // 清空
+            const keys = Object.keys(fullData);
+            keys.forEach((cat, index) => {
+                const div = document.createElement('div');
+                div.className = 'category-item' + (index === 0 ? ' active' : '');
+                div.innerText = cat;
+                div.onclick = () => {
+                    document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+                    div.classList.add('active');
+                    searchInput.value = '';
+                    clearBtn.style.display = 'none';
+                    renderTags(cat);
+                };
+                list.appendChild(div);
+            });
+            if (keys.length > 0) renderTags(keys[0]);
+        }
+
+        function renderTags(catName) {
+            const container = document.getElementById('tagsList');
+            container.innerHTML = '';
+            if(fullData[catName]) {
+                fullData[catName].forEach(tag => container.appendChild(createTagCard(tag)));
+            }
+        }
+
+        function createTagCard(tag) {
+            const card = document.createElement('div');
+            card.className = 'tag-card';
+            card.innerHTML = `<span class="tag-english">${tag.en}</span><span class="tag-chinese">${tag.cn}</span>`;
+            return card;
+        }
+
+        searchInput.oninput = (e) => {
+            const val = e.target.value.toLowerCase().trim();
+            clearBtn.style.display = val ? 'flex' : 'none';
+            const container = document.getElementById('tagsList');
+            if (!val) {
+                const activeCatEl = document.querySelector('.category-item.active');
+                if (activeCatEl) renderTags(activeCatEl.innerText);
+                return;
+            }
+            container.innerHTML = '';
+            Object.values(fullData).flat().forEach(tag => {
+                if (tag.en.toLowerCase().includes(val) || tag.cn.includes(val)) {
+                    container.appendChild(createTagCard(tag));
+                }
+            });
+        };
+
+        clearBtn.onclick = () => {
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            const activeCatEl = document.querySelector('.category-item.active');
+            if (activeCatEl) renderTags(activeCatEl.innerText);
+            searchInput.focus();
+        };
+    </script>
 </body>
 </html>
