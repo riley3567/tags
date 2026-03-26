@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D 标签管理工具</title>
+    <title>优雅 3D 玻璃标签工具</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -11,47 +11,62 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
         }
 
+        /* 核心变量定义 - 加入玻璃拟态和克制的 3D 值 */
         :root {
-            --bg-body: #f5f7fa;
-            --bg-card: #ffffff;
-            --text-main: #000000;
+            /* 1. 背景：改为淡淡的渐变，以便展示玻璃模糊效果 */
+            --bg-body: linear-gradient(135deg, #e0e6ed 0%, #f5f7fa 100%);
+            
+            /* 2. 玻璃拟态核心：半透明背景和模糊 */
+            --bg-glass: rgba(255, 255, 255, 0.5); /* 亮色半透明 */
+            --glass-blur: blur(10px);              /* 模糊程度 */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.2); /* 玻璃亮边 */
+            
+            /* 3. 基础视觉 */
+            --bg-card: #ffffff; /* 备用非透明背景 */
+            --text-main: #333333;
             --text-light: #6c757d;
             --header-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            --category-item-bg: #f8f9fa;
-            --category-item-hover: #e9ecef;
+            --category-item-bg: rgba(0, 0, 0, 0.03);
+            --category-item-hover: rgba(0, 0, 0, 0.08);
             --accent-color: #6a11cb;
             --input-border: #ddd;
             --tag-english-color: #030303;
             --tag-chinese-color: #2575fc;
-            --shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            /* 3D 效果相关变量 */
-            --3d-persp: 1000px;
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.07); /* 更柔和的阴影 */
+            
+            /* 4. 克制的 3D 效果变量 */
+            --3d-persp: 2000px; /* 增加透视距离，使倾斜更平缓 */
         }
 
         .theme-dark {
-            --bg-body: #121212;
+            /* 暗色玻璃拟态 */
+            --bg-body: linear-gradient(135deg, #0f0f12 0%, #1a1a1f 100%);
+            --bg-glass: rgba(30, 30, 35, 0.6); /* 暗色半透明 */
+            --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+            
             --bg-card: #1e1e1e;
-            --text-main: #ffffff;
+            --text-main: #eeeeee;
             --text-light: #aaaaaa;
             --header-gradient: linear-gradient(135deg, #4b0d8f 0%, #1545cc 100%);
-            --category-item-bg: #2c2c2c;
-            --category-item-hover: #3a3a3a;
+            --category-item-bg: rgba(255, 255, 255, 0.04);
+            --category-item-hover: rgba(255, 255, 255, 0.1);
             --accent-color: #bb86fc;
             --input-border: #444;
             --tag-english-color: #f3f3f3;
             --tag-chinese-color: #87C120;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         body {
-            background-color: var(--bg-body);
+            background: var(--bg-body);
+            background-attachment: fixed; /* 固定背景，增强模糊对比 */
             color: var(--text-main);
             line-height: 1.6;
-            /* 给整个 body 一个全局透视，虽然主要在 main 里用 */
             perspective: var(--3d-persp);
+            min-height: 100vh;
         }
         
         .container {
@@ -63,12 +78,12 @@
         header {
             text-align: center;
             margin-bottom: 30px;
-            padding: 20px;
+            padding: 25px;
             background: var(--header-gradient);
             color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transform: translateZ(10px); /* 微微浮起 */
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transform: translateZ(10px); /* 微微浮起，保持立体感 */
         }
 
         .controls-wrapper {
@@ -83,7 +98,7 @@
             height: 50px;
             border-radius: 12px;
             border: 2px solid var(--accent-color);
-            background: var(--bg-card);
+            background: var(--bg-card); /* 主题按钮不透明 */
             color: var(--accent-color);
             cursor: pointer;
             display: flex;
@@ -92,10 +107,9 @@
             font-size: 1.4rem;
             flex-shrink: 0;
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
         }
         .theme-btn:hover {
-            transform: scale(1.05) translateZ(5px);
+            transform: scale(1.05);
         }
 
         .search-container {
@@ -106,15 +120,17 @@
 
         .search-box {
             width: 100%;
-            padding: 14px 45px 14px 15px;
+            padding: 14px 45px 14px 20px;
             border: 2px solid var(--input-border);
-            border-left: 5px solid var(--accent-color);
+            border-left: 6px solid var(--accent-color);
             border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 700;
-            /* 改为左对齐，视觉更平衡 */
-            text-align: left;
-            background-color: var(--bg-card);
+            font-size: 1.05rem;
+            font-weight: 600;
+            
+            /* --- 修改 1: 字体居右 --- */
+            text-align: right;
+            
+            background-color: var(--bg-card); /* 输入框不透明 */
             color: var(--text-main);
             outline: none;
             transition: all 0.3s ease;
@@ -122,8 +138,7 @@
 
         .search-box:focus {
             border-color: var(--accent-color);
-            border-left-width: 8px;
-            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.15);
+            box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.1);
         }
 
         .clear-btn {
@@ -133,8 +148,8 @@
             transform: translateY(-50%);
             background: var(--category-item-hover);
             border: none;
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             border-radius: 50%;
             color: var(--text-main);
             display: none;
@@ -144,134 +159,133 @@
             z-index: 2;
         }
 
-        /* 布局设置 */
         .main-content {
             display: flex;
             gap: 30px;
             display: none; 
         }
         
-        /* 侧边栏 */
+        /* --- 修改 2: 分类列表增加透明玻璃效果 --- */
         .categories-sidebar {
             flex: 1;
-            background: var(--bg-card);
-            border-radius: 10px;
-            padding: 20px;
+            
+            /* 玻璃拟态核心样式 */
+            background: var(--bg-glass);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur); /* 兼容 Safari */
+            border: var(--glass-border);
+            
+            border-radius: 15px;
+            padding: 25px;
             box-shadow: var(--shadow);
-            /* 关键：为分类项目提供 3D 空间 */
             perspective: var(--3d-persp); 
-            align-self: flex-start; /* 防止侧边栏拉伸 */
+            align-self: flex-start;
         }
         
         .category-item {
             font-weight: 600;
-            padding: 12px 15px;
+            padding: 12px 18px;
             margin-bottom: 15px;
             background: var(--category-item-bg);
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             position: relative;
-            /* 关键：保持 3D */
             transform-style: preserve-3d;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-bottom: 4px solid rgba(0,0,0,0.1); 
-            border-right: 1px solid rgba(0,0,0,0.05);
+            /* 优化过渡，使其更平滑 */
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border-bottom: 3px solid rgba(0,0,0,0.05); 
         }
         
         .category-item:hover {
             background: var(--category-item-hover);
-            /* 向上弹起并向观众靠近 */
-            transform: translateY(-5px) translateZ(20px); 
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-            border-bottom-color: rgba(0,0,0,0.15);
+            /* --- 修改 3: 克制 3D 浮起 (20px -> 8px) --- */
+            transform: translateY(-3px) translateZ(8px); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
         
         .category-item.active {
             background: var(--accent-color);
             color: white;
-            /* 点击压入感 */
-            transform: translateY(2px) translateZ(0px); 
+            /* 点击压入感也相应减小 */
+            transform: translateY(1px) translateZ(0px); 
             border-bottom-width: 1px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            margin-bottom: 18px; 
+            margin-bottom: 17px; 
         }
         
-        /* --- 标签展示区 3D 升级 --- */
         .tags-display {
             flex: 6;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px; /* 略微增加间距 */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
             align-content: start;
-            /* 关键：为卡片提供 3D 透视环境 */
             perspective: var(--3d-persp); 
-            padding: 10px; /* 留出卡片旋转的空间 */
+            padding: 5px; 
         }
         
+        /* --- 修改 4: 标签卡增加透明玻璃效果 --- */
         .tag-card {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 25px; /* 增加内边距 */
+            /* 玻璃拟态核心样式 */
+            background: var(--bg-glass);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: var(--glass-border);
+            
+            border-radius: 15px;
+            padding: 28px;
             box-shadow: var(--shadow);
-            border-left: 5px solid var(--accent-color);
+            border-left: 6px solid var(--accent-color);
             cursor: pointer;
             position: relative;
-
-            /* 关键 1：保持 3D 空间，供 JavaScript 动态旋转 */
             transform-style: preserve-3d;
             
-            /* 关键 2：平滑的 CSS 过渡，用于鼠标移入/移出时的复位 */
+            /* JS 动态旋转的过渡速率调整为略微跟手但不过分敏锐 */
             transition: 
-                transform 0.1s ease-out, /* JS 动态旋转需要快速响应 */
+                transform 0.15s ease-out, 
                 box-shadow 0.3s ease,
-                background-color 0.3s ease;
+                background-color 0.3s ease,
+                border-color 0.3s ease;
                 
-            /* 关键 3：初始状态，translateZ 确保它不在父级平面上，增强立体感 */
             transform: translateZ(0px); 
         }
 
-        /* CSS 处理悬停时的基础效果（阴影和 Z轴浮起） */
         .tag-card:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            /* JS 动态效果会覆盖 rotate，这里只处理 Z 轴 */
-            /* transform: translateZ(30px); -> 这个会被 JS 的 transform 覆盖，不写 */
+            /* 悬停时的基础阴影深化 */
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.15);
         }
         
-        /* 增强内部元素的立体感，让文字也浮起来 */
+        /* --- 修改 5: 克制内部文字浮起 (20px -> 6px) --- */
         .tag-english, .tag-chinese {
             display: block;
-            font-weight: 600;
-            /* 关键 4：给内部文字加上 translateZ，产生分层感 */
-            transform: translateZ(20px); 
-            /* 确保文本也参与 3D 变换 */
+            font-weight: 700;
+            transform: translateZ(6px); /* 极细微的层级感 */
             transform-style: preserve-3d; 
-            backface-visibility: hidden; /* 防止旋转时背面穿透 */
+            backface-visibility: hidden;
         }
         
         .tag-english {
             color: var(--tag-english-color);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
         }
         
         .tag-chinese {
             color: var(--tag-chinese-color);
-            font-size: 1rem;
-            opacity: 0.9;
+            font-size: 1.05rem;
+            opacity: 0.95;
+            font-weight: 600;
         }
         
-        /* 加载文本 3D */
         .loading-text {
             text-align: center;
             padding: 100px;
             font-size: 1.2rem;
             color: var(--text-light);
-            transform: translateZ(10px);
         }
 
         @media (max-width: 900px) {
             .main-content { flex-direction: column; }
-            .categories-sidebar { align-self: stretch; }
+            .categories-sidebar { align-self: stretch; width: 100%; }
         }
     </style>
 </head>
@@ -295,7 +309,7 @@
 
         <div class="main-content" id="mainContainer">
             <aside class="categories-sidebar">
-                <h3 style="margin-left:13px; margin-bottom: 20px; opacity: 0.8; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transform: translateZ(5px);">分类列表</h3>
+                <h3 style="margin-left:10px; margin-bottom: 22px; opacity: 0.7; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-main);">分类列表</h3>
                 <div id="categoriesList"></div>
             </aside>
             <main class="tags-display" id="tagsList"></main>
@@ -411,7 +425,7 @@
             }
         }
 
-        /* --- 核心：JavaScript 动态 3D 效果实现 --- */
+        /* --- 修改 6: 核心 3D 参数降低，使其更克制 --- */
         function createTagCard(tag) {
             const card = document.createElement('div');
             card.className = 'tag-card';
@@ -420,50 +434,37 @@
             // 复制功能
             card.onclick = () => {
                 navigator.clipboard.writeText(tag.en).then(() => {
-                    const originalBg = card.style.backgroundColor;
-                    const originalBorder = card.style.borderLeftColor;
-                    card.style.backgroundColor = 'var(--category-item-hover)';
+                    // 简单的复制反馈
+                    const originalAccent = card.style.borderLeftColor;
                     card.style.borderLeftColor = 'var(--tag-chinese-color)';
                     setTimeout(() => {
-                        card.style.backgroundColor = originalBg;
-                        card.style.borderLeftColor = originalBorder;
-                    }, 300);
+                        card.style.borderLeftColor = originalAccent;
+                    }, 400);
                 });
             };
 
-            // --- 动态 3D 效果核心逻辑 ---
-            const maxRotation = 15; // 最大旋转角度（度）
-            const floatZ = 30;     // 悬停时 Z轴浮起高度（px）
+            // --- 动态 3D 效果核心逻辑 - 已降低参数 ---
+            const maxRotation = 5; // --- 修改 6a: 最大旋转角度大幅降低 (15 -> 5) ---
+            const floatZ = 12;     // --- 修改 6b: 悬停时 Z轴浮起高度降低 (30 -> 12) ---
 
             card.addEventListener('mousemove', (e) => {
-                // 1. 获取卡片相对于视口的位置和尺寸
                 const rect = card.getBoundingClientRect();
-                
-                // 2. 计算鼠标在卡片内部的坐标 (0 到 width/height)
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 
-                // 3. 将坐标转换为中心化百分比 (-0.5 到 0.5)
                 const xPct = (x / rect.width) - 0.5;
                 const yPct = (y / rect.height) - 0.5;
                 
-                // 4. 计算旋转角度
-                // 鼠标在右 (xPct > 0) 应该沿 Y 轴正向旋转 (rotateY)
-                // 鼠标在上 (yPct < 0) 应该沿 X 轴正向旋转 (rotateX)
                 const rotationY = xPct * maxRotation * 2; 
-                const rotationX = -yPct * maxRotation * 2; // 取反，因为 Y轴坐标向下
+                const rotationX = -yPct * maxRotation * 2; 
                 
-                // 5. 应用 3D 变换：旋转 + Z轴浮起
-                // 同时把 transiton 缩短，保证跟手感
-                card.style.transition = 'transform 0.05s ease-out, box-shadow 0.3s ease';
-                card.style.transform = `perspective(1000px) rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateZ(${floatZ}px)`;
+                // 应用克制的 3D 变换
+                card.style.transform = `perspective(2000px) rotateX(${rotationX}deg) rotateY(${rotationY}deg) translateZ(${floatZ}px)`;
             });
 
-            // 鼠标移出：复位卡片
+            // 鼠标移出：平滑复位
             card.addEventListener('mouseleave', () => {
-                // 回复 CSS 中定义的较慢过渡，实现平滑复位
-                card.style.transition = 'transform 0.3s ease-out, box-shadow 0.3s ease';
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+                card.style.transform = 'perspective(2000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
             });
 
             return card;
@@ -487,7 +488,7 @@
             
             // 搜索结果为空处理
             if (tagsListContainer.innerHTML === '') {
-                tagsListContainer.innerHTML = '<div class="loading-text" style="grid-column: 1/-1;">未找到相关标签...</div>';
+                tagsListContainer.innerHTML = '<div class="loading-text" style="grid-column: 1/-1; transform: translateZ(5px);">未找到相关标签...</div>';
             }
         };
 
