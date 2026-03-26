@@ -172,23 +172,21 @@
             outline: none;
         }
 
-		input[type="text"], textarea {
-	    	border: none;
-	    	padding: 10px 15px;
-	 	    border-radius: 8px;
-			background: #e0e0e0; /* 需配合背景颜色 */
-	    	/* 核心 3D 阴影：左上亮，右下暗 */
-	 	   	box-shadow: inset 3px 3px 6px #bebebe, 
-	                	inset -3px -3px 6px #ffffff;
-	    	outline: none;
-	    	transition: all 0.3s ease;
+		input[type="text"] {
+		    border: 1px solid #ddd;
+		    border-radius: 6px;
+		    padding: 10px;
+		    background: #fff;
+		    /* 基础阴影 */
+		    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+		    transition: box-shadow 0.3s ease, transform 0.3s ease;
 		}
-
-		/* 获得焦点时，阴影反转或加强，产生“按下”或“激活”的视觉感 */
+		
 		input[type="text"]:focus {
-		    box-shadow: inset 1px 1px 3px #bebebe, 
-		                inset -1px -1px 3px #ffffff,
-		                0 0 8px rgba(0, 123, 255, 0.2);
+		    /* 向上微调并加强阴影，模拟悬浮高度增加 */
+		    transform: translateY(-2px);
+		    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+		    border-color: #4a90e2;
 		}
 
         .clear-btn {
@@ -311,7 +309,7 @@
         
         <div class="controls-wrapper">
             <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
-            <div class="tags-3d-input-container" id="searchContainer">
+            <div class="tags-3d-input-container search-container" id="searchContainer">
                 <input type="text" class="search-box" id="searchInput" placeholder="搜索标签...">
                 <button class="clear-btn" id="clearBtn"><i class="fas fa-times"></i></button>
             </div>
