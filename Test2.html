@@ -19,6 +19,7 @@
             /* 亮色模式 - 进一步柔和色彩，增加 3D 深度感 */
             --bg-body: #f0f2f5;
             --glass-bg: rgba(255, 255, 255, 0.45);
+            --glass-card: rgba(255, 255, 255, 0.4);
             --glass-border: rgba(255, 255, 255, 0.5);
             --text-main: #2d3436;
             --text-color: #2575fc;
@@ -34,6 +35,7 @@
         .theme-dark {
             --bg-body: #1e1e2f;
             --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-card: rgba(155, 155, 155, 0.2);
             --glass-border: rgba(255, 255, 255, 0.12);
             --text-main: #dfe6e9;
             --text-color: #87C120;
@@ -220,7 +222,7 @@
         }
 
         .tag-card {
-            background: var(--glass-bg);
+            background: var(--glass-card);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 20px;
