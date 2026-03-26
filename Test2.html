@@ -25,6 +25,7 @@
             --accent-color: #a29bfe; 
             --shadow-light: rgba(255, 255, 255, 0.9);
             --shadow-dark: rgba(166, 180, 200, 0.5);
+            --shadow-card: rgba(255, 255, 255, 0.2);
             --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
             /* 增加全局 3D 视角深度，为轻微旋转提供基础 */
             --perspective: 2000px; 
@@ -38,6 +39,7 @@
             --text-color: #87C120;
             --accent-color: #6c5ce7;
             --shadow-low: rgba(155, 155, 155, 0.05);
+            --shadow-card: rgba(155, 155, 155, 0.2);
             --shadow-dark: rgba(0, 0, 0, 0.4);
             --shadow-light: rgba(255, 255, 255, 0.05);
             --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
@@ -218,7 +220,7 @@
         }
 
         .tag-card {
-            /* background: var(--glass-bg); */
+            background: var(--glass-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 20px;
@@ -265,17 +267,18 @@
             /* border-color: var(--accent-color); */
             /* 增强深度 */
             /* box-shadow: 15px 15px 35px var(--shadow-dark), -15px -15px 35px var(--shadow-low),
-                        inset 0 0 20px rgba(155,155,155,0.6);
+                        inset 0 0 20px rgba(255,255,255,0.6);
             */
             /* 轻微且锚定的旋转，不乱晃 */
-            transform: rotateY(3deg) translateZ(8px);
+            /* transform: rotateY(3deg) translateZ(8px); */
+            transform: rotateY(10deg) translateZ(8px);
             perspective-origin: right; /* 旋转轴在右侧 */
         }
         
         /* 增强光泽 */
 
         .tag-card:hover::after {
-             background: linear-gradient(135deg, rgba(155,155,155,0.4) 0%, transparent 80%);
+             background: linear-gradient(135deg, var(--shadow-card) 0%, transparent 80%);
          }
 
         .tag-english {
