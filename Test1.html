@@ -117,6 +117,7 @@
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
             color: var(--text-main);
+            font-weight: 700;
             font-size: 1.1rem;
             /* 关键：字体居右 */
             text-align: right; 
@@ -125,7 +126,7 @@
         }
 
         .search-box:focus {
-            box-shadow: inset 2px 2px 8px var(--shadow-dark), 0 0 15px rgba(157, 141, 241, 0.3);
+            box-shadow: inset 4px 4px 8px var(--shadow-dark), 0 0 15px rgba(157, 141, 241, 0.3);
             border-color: var(--accent-color);
         }
 
@@ -220,7 +221,7 @@
 
         .tag-card:hover {
             /* 悬停时不产生位移，仅增强光泽 */
-            background: rgba(255, 255, 255, 0.5);
+            /* background: rgba(255, 255, 255, 0.5); */
             box-shadow: 8px 8px 20px var(--shadow-dark), -8px -8px 20px var(--shadow-light);
         }
 
