@@ -3,181 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D 玻璃拟态 UI 界面</title>
+    <title>极简导航站</title>
     <style>
         :root {
-            --main-bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --accent-color: #38bdf8;
-            --text-color: #f1f5f9;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --accent-color: #00d4ff;
         }
 
         body {
             margin: 0;
-            padding: 40px;
-            background: var(--main-bg);
-            background-attachment: fixed;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top right, #1a1a2e, #16213e);
             color: var(--text-color);
-            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
             min-height: 100vh;
         }
 
-        /* 顶部工具栏：搜索框靠右 */
-        .toolbar {
-            display: flex;
-            justify-content: flex-end;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* 搜索区域 */
+        .search-wrapper {
             margin-bottom: 40px;
+            text-align: right;
         }
 
-        .search-container {
-            position: relative;
-            width: 320px;
-        }
-
-        .search-input {
-            width: 100%;
+        #site-search {
+            width: 300px;
             padding: 12px 20px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            border-radius: 12px;
             border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            color: #fff;
-            font-size: 15px;
-            text-align: right; /* 字体居右 */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: right; /* 文字居右 */
             outline: none;
+            transition: all 0.3s ease;
         }
 
-        .search-input:focus {
+        #site-search:focus {
             border-color: var(--accent-color);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
         }
 
-        /* 分类选择区域 */
-        .category-section {
-            margin-bottom: 30px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
+        /* 分类块 */
         .category-item {
-            padding: 10px 24px;
+            margin-bottom: 35px;
             background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 25px;
             border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 14px;
-            backdrop-filter: blur(5px);
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
-        .category-item:hover {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.4);
-            /* 不使用位移，防止抖动 */
-        }
-
-        .category-item.active {
-            background: var(--accent-color);
-            color: #0f172a;
-            font-weight: bold;
-            box-shadow: 0 0 15px var(--accent-color);
+        .category-title {
+            font-size: 1.4rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 12px;
         }
 
         /* 标签卡片网格 */
         .tag-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
         }
 
         .tag-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 18px;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 
-                        inset 0 1px 1px rgba(255, 255, 255, 0.1); /* 3D微边框 */
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            user-select: none;
+            text-decoration: none;
+            color: #ddd;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
+            /* 3D 效果平滑过渡 */
+            transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), 
+                        background 0.3s ease, 
+                        border 0.3s ease;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .tag-card:hover {
+            transform: translateY(-5px) translateZ(0); /* 向上微移，无晃动 */
             background: rgba(255, 255, 255, 0.15);
-            border-color: var(--accent-color);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            color: var(--accent-color);
         }
 
-        .tag-card:active {
-            transform: scale(0.96); /* 点击时的物理反馈 */
-            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
-        }
-
-        .tag-name {
-            font-size: 16px;
-            font-weight: 500;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .tag-sub {
-            font-size: 12px;
-            opacity: 0.5;
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            #site-search { width: 100%; }
+            .tag-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
 <body>
 
-    <div class="toolbar">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="搜索提示词...">
+<div class="container">
+    <div class="search-wrapper">
+        <input type="text" id="site-search" placeholder="搜索站内资源...">
+    </div>
+
+    <div class="category-item">
+        <h2 class="category-title">🛠️ 在线工具</h2>
+        <div class="tag-grid">
+            <a href="https://www.66zan.cn/autoformat/" class="tag-card">文本排版</a>
+            <a href="https://prompt.newzone.top/app/zh-hant" class="tag-card">标签仓库</a>
+            <a href="https://pastedownload.com/" class="tag-card">视频下载</a>
+            <a href="https://www.lzltool.cn/Tools/HtmlToText" class="tag-card">去网页标签</a>
+            <a href="https://www.jyshare.com/front-end/6214/#0fae39" class="tag-card">图片取色器</a>
         </div>
     </div>
 
-    <div class="category-section">
-        <div class="category-item active">全部标签</div>
-        <div class="category-item">人物角色</div>
-        <div class="category-item">画风材质</div>
-        <div class="category-item">光影环境</div>
-        <div class="category-item">构图视角</div>
+    <div class="category-item">
+        <h2 class="category-title">☁️ 云计算平台</h2>
+        <div class="tag-grid">
+            <a href="https://www.autodl.com/" class="tag-card">AutoDL</a>
+            <a href="https://www.ai-galaxy.com/" class="tag-card">智星云</a>
+            <a href="https://cnb.cool/" class="tag-card">腾讯云</a>
+            <a href="https://spacehpc.com/" class="tag-card">星海智算</a>
+        </div>
     </div>
 
-    <div class="tag-grid">
-        <div class="tag-card">
-            <span class="tag-name">Masterpiece</span>
-            <span class="tag-sub">杰作</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-name">Cinematic</span>
-            <span class="tag-sub">电影感</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-name">Hyper-detailed</span>
-            <span class="tag-sub">超精细</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-name">Ray Tracing</span>
-            <span class="tag-sub">光线追踪</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-name">Cyberpunk</span>
-            <span class="tag-sub">赛博朋克</span>
-        </div>
-        <div class="tag-card">
-            <span class="tag-name">Soft Lighting</span>
-            <span class="tag-sub">柔和光影</span>
+    <div class="category-item">
+        <h2 class="category-title">📚 综合性网站 & 小说</h2>
+        <div class="tag-grid">
+            <a href="https://avcar.vip/forum.php" class="tag-card">AvCar</a>
+            <a href="https://www.xn--1jqvh729avzfcy2d8ummib.com/" class="tag-card">集书阁</a>
+            <a href="https://www.cool18.com/" class="tag-card">酷18网</a>
+            <a href="https://xsijishe.com/portal.php" class="tag-card">司机社</a>
+            <a href="https://sehuatang.org/" class="tag-card">色花堂</a>
+            <a href="https://www.chumoks.com/" class="tag-card">初墨书屋</a>
+            <a href="https://hjd2048.com/2048/" class="tag-card">2048核基地</a>
+            <a href="https://www.23pas.com/" class="tag-card">择天记</a>
+            <a href="https://hlib.cc/" class="tag-card">H图书馆</a>
+            <a href="https://www.dswx.cyou/" class="tag-card">女神小说</a>
+            <a href="https://www.69hnovel.com/" class="tag-card">69文学网</a>
+            <a href="https://www.alicesw.com/" class="tag-card">爱丽丝书屋</a>
         </div>
     </div>
+
+    <div class="category-item">
+        <h2 class="category-title">🖼️ 在线图片 & 漫画</h2>
+        <div class="tag-grid">
+            <a href="https://www.pixiv.net/" class="tag-card">Pixiv</a>
+            <a href="https://exhentai.org/" class="tag-card">EX-Hentai</a>
+            <a href="https://www.forumophilia.com/" class="tag-card">Forum Ophilia</a>
+        </div>
+    </div>
+
+    <div class="category-item">
+        <h2 class="category-title">📽️ 视频与磁力资源</h2>
+        <div class="tag-grid">
+            <a href="https://javdb.com/" class="tag-card">JavDB</a>
+            <a href="https://missav123.to/en" class="tag-card">MISSAV123</a>
+            <a href="https://faphouse.com/zh" class="tag-card">Faphouse</a>
+            <a href="https://hil.xhamster1.desi/" class="tag-card">XHAMSTER</a>
+            <a href="https://tubesafari.com/" class="tag-card">TUBESAFARI</a>
+            <a href="https://btdig.com/" class="tag-card">BT Dig</a>
+            <a href="https://cilipa.com/" class="tag-card">磁力爬</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 简单的站内实时搜索功能
+    const searchInput = document.getElementById('site-search');
+    const cards = document.querySelectorAll('.tag-card');
+
+    searchInput.addEventListener('input', (e) => {
+        const text = e.target.value.toLowerCase();
+        cards.forEach(card => {
+            const isVisible = card.textContent.toLowerCase().includes(text);
+            card.style.display = isVisible ? 'block' : 'none';
+        });
+    });
+</script>
 
 </body>
 </html>
