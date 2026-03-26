@@ -268,15 +268,15 @@
                         inset 0 0 20px rgba(155,155,155,0.6);
             */
             /* 轻微且锚定的旋转，不乱晃 */
-            transform: rotateY(3deg) translateZ(4px);
+            transform: rotateY(3deg) translateZ(8px);
             perspective-origin: right; /* 旋转轴在右侧 */
         }
         
         /* 增强光泽 */
 
-        /* .tag-card:hover::after { */
-        /*     background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 60%); */
-        /* } */
+        .tag-card:hover::after {
+             background: linear-gradient(135deg, rgba(155,155,155,0.4) 0%, transparent 80%);
+         }
 
         .tag-english {
             display: block;
