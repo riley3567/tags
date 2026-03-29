@@ -47,7 +47,7 @@ Harpy 鳥身女妖
 
 
 
-色情
+[色情]
 detailed pussy 逼真的阴户
 detailed anus 逼真的肛门
 realistic woman pussy 逼真的女人的阴户
@@ -61,7 +61,9 @@ clit 阴蒂
 puffy pussy 丰满的阴部
 puffy nipples 肿胀的乳头
 girl on top 女上位
-
+bottomless 下半身裸露
+nude male 裸体男性
+nipples through clothes 乳头透过衣服
 
 
 [人物]
@@ -178,11 +180,6 @@ shiny skin 闪亮皮肤
 presenting 呈现
 deep skin 深层皮肤
 
-
-[色情]
-bottomless 下半身裸露
-nude male 裸体男性
-nipples through clothes 乳头透过衣服
 
 
 [衣服]
