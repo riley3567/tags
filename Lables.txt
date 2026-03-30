@@ -23,27 +23,27 @@ glowing tentacles sex 发光的触手性爱
 
 [动物]
 Werewolf 狼人
-Beastman 獸人
-Minotaur 牛頭人
+Beastman 兽人
+Minotaur 牛头人
 Golem 岩石人/魔像
 Ogre 食人魔
 Troll 巨魔/巨怪
-Cyclops 獨眼巨人
+Cyclops 独眼巨人
 Giant 巨人
 yeti/creature 雪人
-Sasquatch 北美大腳怪
-Boarman 豬人
-Barbarian 野蠻人
-dragon man 龍人
+Sasquatch 北美大脚怪
+Boarman 猪人
+Barbarian 野蛮人
+dragon man 龙人
 Goblin 哥布林
 Hobgoblin 大哥布林
-Kobold 狗頭人/小型龍人
+Kobold 狗头人/小型龙人
 Lizardman 蜥蜴人
 Gnoll 鬼豺人/豺狼人
 Oni/Oni monster 鬼
-Demonkin/Tiefling 惡魔人/魔裔
+Demonkin/Tiefling 恶魔人/魔裔
 goat male/Goatman/Goat monster 山羊人
-Harpy 鳥身女妖
+Harpy 鸟身女妖
 
 
 
@@ -180,11 +180,11 @@ shiny skin 闪亮皮肤
 presenting 呈现
 deep skin 深层皮肤
 fingernails 手指甲
-hair down 披下來的頭髮
-hair spread out散開的頭髮
-hair flip 撥頭髮
-hair up 盤起來的頭髮
-hair behind ear 耳後有頭髮
+hair down 披下来的头发
+hair spread out散开的头发
+hair flip 拨头发
+hair up 盘起来的头发
+hair behind ear 耳后有头发
 
 
 [衣服]
@@ -659,7 +659,7 @@ looking sideways at the camera 向侧面看向镜头
 from behind view 从后面看
 front view 正面
 petite 坐脸视角
-bilaterally symmetrical 左右對稱
+bilaterally symmetrical 左右对称
 side view 侧面
 back view 背面
 from above 从上往下
