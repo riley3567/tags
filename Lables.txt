@@ -185,6 +185,7 @@ hair spread out散开的头发
 hair flip 拨头发
 hair up 盘起来的头发
 hair behind ear 耳后有头发
+injury 受伤
 
 
 [衣服]
@@ -446,6 +447,7 @@ ball gag 口球
 
 
 [动作]
+hand shielding eyes from sun 用手遮挡阳光
 waving 挥手
 contrapposto 反向姿势
 standing on one leg 抬起一条腿
@@ -696,7 +698,7 @@ upshirt 从衬衫下方瞥
 upshorts 从裙底瞥
 stare at me 盯着你
 looking_outside 向外看
-
+straight on 正面
 
 
 [画质]
