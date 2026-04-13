@@ -233,6 +233,7 @@ urine stains on panties 内裤上有尿渍
 [表情]
 expressionless面无表情
 raised eyebrow挑眉
+flustered 惊慌的
 blush 脸红
 light blush轻微脸红
 full face blush 满脸腮红
@@ -426,6 +427,8 @@ demonic penis 恶魔阴茎
 glowing penis 发光阴茎
 thorned penis 带刺阴茎
 invisible penis 隐形阴茎
+Pearled penis 珍珠阴茎
+Bumpy Penis 凹凸不平的阴茎
 big canine penis 巨大犬科动物阴茎
 equine penis 马形阴茎
 equine testicles 马形睾丸
@@ -449,7 +452,9 @@ ball gag 口球
 [动作]
 hand shielding eyes from sun 用手遮挡阳光
 waving 挥手
+hand under panties 手伸进内裤
 contrapposto 反向姿势
+crossed legs 二郎腿
 standing on one leg 抬起一条腿
 another grabbing clothes 另一只手抓着衣服
 gradient 人物倾斜
@@ -661,6 +666,7 @@ looking sideways at the camera 向侧面看向镜头
 from behind view 从后面看
 front view 正面
 petite 坐脸视角
+looking ahead 看向前方
 bilaterally symmetrical 左右对称
 side view 侧面
 back view 背面
@@ -673,6 +679,7 @@ macro view 微距
 upper body 上半身
 directly below 正下方
 from below looking up 从下往上看
+pantyshot 内裤特写
 
 
 
