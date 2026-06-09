@@ -58,12 +58,21 @@ gigantic billiard ball in anus 肛门内插入巨大的台球
 anal gaping 肛门张开
 tight wet pussy 紧致湿润的阴部
 clit 阴蒂
+vulva 外阴
+vulva opening 外阴打开
 puffy pussy 丰满的阴部
 puffy nipples 肿胀的乳头
 girl on top 女上位
 bottomless 下半身裸露
 nude male 裸体男性
 nipples through clothes 乳头透过衣服
+lutty pussy 淫荡的阴部
+urethra 尿道口
+hairy mons 阴阜毛发
+Hymen 处女膜
+impregnation 受孕
+sperm hit ovum 精卵结合
+
 
 
 [人物]
@@ -186,6 +195,11 @@ hair flip 拨头发
 hair up 盘起来的头发
 hair behind ear 耳后有头发
 injury 受伤
+massive fat vagina 肥厚的阴道
+red engorged clit 红肿的阴蒂
+long labia lips 长阴唇
+hypertrophied clit 肥大的阴蒂
+hairy pubis 多毛的阴阜
 
 
 [衣服]
@@ -227,15 +241,18 @@ white bodysuit 白色连体衣
 garter ring 吊带环
 wearing only apron 只穿着围裙
 urine stains on panties 内裤上有尿渍
+briefs 紧身内裤
 
 
 
 [表情]
+disturbing 令人不安的
+pout 嘟嘴
 expressionless面无表情
 raised eyebrow挑眉
 flustered 惊慌的
 blush 脸红
-light blush轻微脸红
+light blush 轻微脸红
 full face blush 满脸腮红
 shy 害羞的
 embarrassed 尴尬害羞
@@ -333,9 +350,117 @@ lip biting 咬嘴唇
 sleepy eyes 睡眼惺忪
 downturned eyes 下垂的眼睛
 shy exhibitionist 害羞的暴露狂
+kind smile 温柔的微笑
+staring 凝视
+staring 露出犬齿
+tongue out 舌头舔嘴唇
+smirk 舌头舔嘴唇
+smirk 得意地笑
+unamused 一脸不悦
+glaring 怨恨
+smile 微笑
+happy 快乐
+embarrassed 尴尬
+grimace (因痛苦、厌恶等)做怪相
+teasing smile 嘲弄的微笑
+evil smile 邪恶的微笑
+naughty smile 顽皮的微笑
+seductive smile 迷人的微笑
+grin 露齿笑
+clear face 面无表情
+expressionless 面无表情
+clenched teeth 咬牙切齿
+closed eyes 闭眼
+hair over one eyes 头发蒙住眼睛
+blush 脸红
+empty eyes 眼神空洞
+open mouth 张嘴
+close mouth 闭嘴
+smug face 自以为是
+shy 害羞
+crazy 疯狂
+angry 生气
+annoyed 苦恼
+sleepy 困乏
+sad 悲伤
+drunk 喝醉
+dark persona 黑化
+frown 皱眉
+rolleyes 眼球上翻
+endured face 忍耐表情
+naughty face 下流表情
+fucked silly ahegao 做爱时很痴的表情
+pout 努嘴
+nosebleed 鼻血
+tears 眼泪
+food on face 食物在脸上
+tongue 吐舌
+:d 咧嘴笑
+mouth hold 嘴咬住
+parted lips 嘴唇微张
+lips 嘴唇
+full blush 整张脸泛红
+laughing 在笑的
+:p 右下吐舌头
+:q 右上吐舌头
+fingersmile 用手指做出笑脸
+torogao 淫荡的表情
+shaded 阴沉脸
+tearing up 要哭的表情
+glint 眼中闪现强烈的情感
+heart in eye 眼里冒爱心
+serious 严肃的
+smiley 笑脸
+gloom (expression) 消沉(表情)
+troll 嚣张脸
+bored 无聊的
+expressionless 无口
+smelling 闻
+saliva 唾液
+tongue out 吐舌头
+licking lips 舔嘴唇
+pain 疼痛
+sigh 叹气
+unconscious 失神
+moaning 呻吟
+jitome 轻蔑的眼神
+light smile 浅笑
+fume 气得冒烟(漫画)
+scowl 怒视或嫌弃或不满
+makeup 浓装
+bright pupils 明亮的瞳孔
+no nose 没有鼻子
+:3 猫嘴
+drooling 流口水
+turn pale 脸色苍白
+crying 哭
+puckered lips 撅起的嘴唇
+spit take 惊讶或无语到喷了
+surprised 惊讶
+fangs 尖牙
+screaming 尖叫或大声喊
+jealous 嫉妒的
+flustered 慌乱的
+facial hair 胡子
+scared 害怕的
+>:( 愤怒
+ear blush 耳红
+doyagao 得意脸
+;d 单眼咧嘴笑
+heavy breathing 喘粗气
+>:) 嘲笑
+nervous smile 不安地微笑
+nervous 不安的
+yandere 病娇
+holding breath 憋气
+expressions 表情
+tsundere 傲娇
+ahegao 阿嘿颜
+double v 啊嘿颜比V
 
 
 [名词]
+bruises 瘀伤
 ground 地面
 katana 武士刀
 glowing blade 刀刃闪耀
@@ -450,8 +575,12 @@ ball gag 口球
 
 
 [动作]
+lean on fence 依靠围栏
+side-by-side 肩并肩
 hand shielding eyes from sun 用手遮挡阳光
 waving 挥手
+bursting breasts 呼之欲出的乳房
+bouncing breasts 晃动的乳房
 hand under panties 手伸进内裤
 contrapposto 反向姿势
 crossed legs 二郎腿
@@ -567,6 +696,7 @@ upside down 倒挂
 suspended 悬挂
 pulling shirt open 拉开衬衫
 clothes ripped 衣服被撕破
+ripped clothes 破损的衣服
 two arms behind back 两只手背在身后
 clothed male nude female 穿衣男裸女
 hands_behind head 双手脑后交叉
@@ -677,6 +807,7 @@ wide angle view 广角
 fisheyes view 鱼眼
 macro view 微距
 upper body 上半身
+bust shot 半身特写
 directly below 正下方
 from below looking up 从下往上看
 pantyshot 内裤特写
@@ -770,3 +901,264 @@ well-defined fingers 线条优美的手指
 photo background 照片背景
 3d animation 3D动画
 intricately detailed illustration 精细的插图
+sketch 素描风格
+pastel colors 柔和色调
+vibrant 色彩鲜艳
+watercolor (medium) 水彩中等
+motion blur 动态模糊
+
+
+[负向提示]
+deformed anatomy 畸形解剖
+two belly buttons 两个肚脐
+mutated stomach 变异的腹部
+
+
+[眼睛]
+eyes 眼睛
+heart-shaped pupils 爱心眼
+slit pupils 猫眼
+heterochromia 异色瞳
+aqua eyes 水汪汪的眼睛
+tsurime 吊眼角
+heterochromia 异瞳
+glowing eyes 发光的眼睛
+sclera 眼白部分
+pupil 瞳孔
+eyelashes 睫毛
+tareme 垂眼
+mismatched pupils 左右眼颜色不同
+mismatched sclera 左右眼不同颜色的眼白
+brown eyes 棕眼
+purple eyes 紫眼
+crying with eyes open 睁着眼落泪
+wide-eyed 睁开眼睛
+wink 眨眼
+silver eyes 银眼
+one eye closed 一只眼睛闭着
+ringed eyes 眼圈
+rolling eyes 眼睛抬头
+eye reflection 眼睛反射
+half-closed eyes 眼睛半闭
+star-shaped pupils 星形眼睛
+sparkling eyes 星星眼
+furrowed brow 下眉毛
+constricted pupils 瞳孔收缩
+dilated pupils 瞳孔扩张
+raised eyebrows 挑眉
+upturned eyes 上翘的眼睛
+sanpaku 三白眼
+hollow eyes 漆黑的眼睛
+button eyes 纽扣眼
+no pupils 没有眼睛
+green eyes 绿眼
+streaming tears 流泪
+blue eyes 蓝眼
+eyelid pull 拉眼皮
+happy tears 开心的眼泪
+yellow eyes 金眼
+gradient eyes 渐变瞳色
+grey eyes 灰眼
+red eyes 红眼
+dashed eyes 黑眼圈中的水平线
+black eyes 黑眼
+symbol-shaped pupils 符号眼
+crazy eyes 疯狂的眼睛
+multicolored eyes 多色的黑眼睛
+eyeball 盯着看
+wince 闭一只眼
+half-closed eye 半闭的眼睛(单眼)
+blank eyes 白眼球
+white eyes 白眼
+x-shaped pupils X形眼睛
+Beautiful eyes 美丽眼睛
+
+
+[饰品]
+armlet 臂环
+armband 臂章
+number tattoo 编号纹身
+whip marks 鞭痕
+bandaid 创可贴
+legwear 裹腿
+amulet 护身符
+bracer 护腕
+badge 徽章
+heart lock (kantai collection) 舰娘锁(舰C)
+criss-cross halter 交叉吊带
+anklet 脚镯
+lace trim 蕾丝饰边
+necktie 领带
+buttons 纽扣
+maid headdress 女仆头饰
+fur trim 皮草饰边
+belly chain 脐链
+sarong 莎笼或沙滩浴巾
+ascot 扇形领带
+jewelry 首饰
+girdling 束腰
+tunic 束腰外衣
+ribbon trim 丝带饰边
+chains 锁链
+sunglasses 太阳镜
+barcode 条形码
+leg garter 腿部花边环
+ankle lace-up 腿部系带
+wristband 腕带
+sweater around waist 围腰毛衣
+tattoo 纹身
+martial arts belt 武术腰带
+heartbeat 心跳或表现出心动的文字
+heart tattoo 心形纹身
+fanny pack 腰包
+belt 腰带
+beltbra 腰带文胸
+clothes around waist 腰间衣服
+waist cape 腰披肩
+frilled sash 褶边腰带
+diamond (gemstone) 钻石(宝石)
+
+[上衣]
+harness 背带
+vest 背心
+bikini top 比基尼上衣
+load bearing vest 承重背心
+virgin killer sweater 处男杀手毛衣
+front-tie top 从正面打结的衣物
+duffel coat 粗呢大衣
+lowleg 低胸装
+sleeves folded up 叠起来的袖子
+cloak 斗篷
+dudou 肚兜
+cropped shirt 短衬衫
+collared shirt 翻领衬衫
+collared blouse 翻领短衫
+collared jacket 翻领夹克
+layered sleeves 分层的衣袖
+faulds 腹甲
+checkered shirt 格子衬衫
+oversized shirt 过大号衬衫
+jacket 夹克
+kesa 袈裟
+shoulder cutout 肩部镂空
+shoulder tattoo 肩部纹身
+unbuttoned shirt 解开纽扣的衬衫
+military jacket 军装夹克
+cardigan 开襟衫
+hooded cape 连帽斗篷
+hooded jacket 连帽夹克
+hooded sweater 连帽毛衣
+hooded cloak 连帽披巾
+hooded coat 连帽外套
+hooded track jacket 连帽运动夹克
+off-shoulder sweater 露肩毛衣
+crop top 露脐上衣
+midriff 露腰上衣
+naked shirt 裸体衬衫
+naked cape 裸体披风
+pant suit 女性穿着西服
+capelet 披风
+cape 披肩或斗篷或披风
+topless 上着较少
+wet shirt 湿衬衫
+corset 束身胸衣
+ribbon 丝带
+gym shirt 体操服(上身)
+bikini top removed 脱下比基尼上衣
+coat 外套
+hoodie 卫衣
+tank top 无袖紧身背心
+suit jacket 西装外套
+spaghetti strap 细肩带
+cropped vest 小款背心
+clothing heart shaped cutout 心形镂空
+open-chest sweater 胸部开口的毛衣
+center frills 胸口带花边的服装
+detached sleeves 袖肩分离装
+coattails 燕尾
+tailcoat 燕尾服
+jersey 运动衫
+long sleeves 长袖
+blouse 罩衫
+dress shirt 正装衬衫
+
+
+[内衣]
+budget sarashi 绷带裹胸
+bikini 比基尼
+sarashi 缠胸布
+lingerie 成人内衣
+bow bra 带蝴蝶结的胸罩
+slingshot swimsuit 弹弓泳衣
+strap gap 泛指覆盖面少的吊带胸罩
+lace-trimmed bra 蕾丝边饰文胸
+lace-trimmed bra 蕾丝边胸罩
+lace bra 蕾丝胸罩
+cat cutout 猫咪内衣
+cat lingerie 猫系内衣
+bra strap 内衣肩带
+camisole 女用背心
+beltbra 皮带束胸
+underwear 普通内衣
+strap between breasts 乳房之间的带子
+strapless bra 无肩带文胸
+strapless bra 无肩带胸罩
+no bra 无胸罩
+breast padding 胸垫
+breastplate 胸甲
+bustier 胸衣
+bra 胸罩
+brooch 胸针
+sports bra 运动内衣
+bra removed 摘下的胸罩
+tubetop 直筒式抹胸
+
+
+[内裤]
+front-print panties 正面有图案的内裤
+frilled panties 褶边内裤
+print elasticized cotton panties 印花内裤
+maebari 阴贴
+bear panties 熊印花内裤
+side-tie panties 系带式内裤
+no panties 无内裤
+crotchless panties 无裆内裤
+striped panties 条纹内裤
+fundoshi 日式丁字裤
+diaper 尿布
+panties 内裤
+no_panties 没内裤
+cat ear panties 猫耳造型内裤
+trefoil 露出三角裤
+lace panties 蕾丝内裤
+lace-trimmed panties 蕾丝边内裤
+lace-trimmed legwear 蕾丝边裤
+crotchless panties 开档内裤
+bow panties 蝴蝶结内裤
+highleg panties 高腿内裤
+highleg panties 高开衩的内裤
+pink panties 粉红内裤
+thong 丁字裤
+lowleg panties 低腰式内裤
+crotch plate 档部有特别覆盖物
+bow panties 带蝴蝶结的内裤
+panties under pantyhose 穿在裤袜里的内裤
+g-string 超细款丁字裤
+side-tie panties 侧系内裤
+side-tie bikini bottom 侧系带比基尼泳裤
+strawberry panties 草莓内裤
+micro panties 布料很少的内裤
+bikini bottom 比基尼泳裤
+back-print panties 背面印花的内裤
+white panties 白色内裤
+
+
+[耳环]
+crescent earrings 月牙耳环
+heart earrings 心形耳环
+crystal earrings 水晶耳环
+cat ear headphones 猫耳式耳机
+hoop earrings 环状耳环
+earrings 耳环
+
+
